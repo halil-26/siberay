@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siberay | Blog</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .blog-card { padding: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .blog-img-wrapper { height: 220px; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .blog-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .blog-card:hover .blog-img-wrapper img { transform: scale(1.05); }
+    .blog-content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+    .blog-meta { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="Image.png" alt="Siberay Logo" />
+      <div class="nav-brand-text">
+        <span class="nav-brand-title">Siberay</span>
+        <span class="nav-brand-sub">OMÜ Siber Güvenlik Topluluğu</span>
+      </div>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="hakkimizda.html">Hakkımızda</a></li>
+      <li><a href="etkinlikler.html">Etkinlikler</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="section-header animate">
+        <span class="section-label">// siber istihbarat</span>
+        <h2 class="section-title">Blog & <span>Makaleler</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="blog-grid">
+        <div class="card blog-card animate">
+          <div class="blog-img-wrapper">
+            <img src="yapay-zeka.jpg" alt="Yapay Zeka">
+          </div>
+          <div class="blog-content">
+            <span class="tag tag-blue" style="width: fit-content; margin-bottom: 1rem;">Yapay Zeka</span>
+            <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">Siber Güvenlikte Yapay Zeka: Fırsatlar ve Tehditler</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Yapay zeka teknolojilerinin siber güvenlik alanında nasıl kullanıldığını ve beraberinde getirdiği yeni tehditleri keşfedin.</p>
+            <div class="blog-meta">
+              <span>👤 Berrak Sever</span>
+              <span>📅 15 Nisan 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card blog-card animate">
+          <div class="blog-img-wrapper">
+            <img src="guvenlik.jpg" alt="Güvenlik">
+          </div>
+          <div class="blog-content">
+            <span class="tag tag-red" style="width: fit-content; margin-bottom: 1rem;">Güvenlik</span>
+            <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">Ransomware Saldırılarından Korunma Yöntemleri</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Fidye yazılımı saldırılarının artan tehdidi karşısında kurumların ve bireylerin alabileceği önlemler nelerdir?</p>
+            <div class="blog-meta">
+              <span>👤 M. Halil Solucak</span>
+              <span>📅 10 Nisan 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card blog-card animate">
+          <div class="blog-img-wrapper">
+            <img src="mimari.jpg" alt="Mimari">
+          </div>
+          <div class="blog-content">
+            <span class="tag tag-green" style="width: fit-content; margin-bottom: 1rem;">Mimari</span>
+            <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">Zero Trust Mimarisi: Yeni Nesil Yaklaşım</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Modern siber güvenlik stratejilerinin temel taşı haline gelen Zero Trust mimarisini detaylı olarak inceliyoruz.</p>
+            <div class="blog-meta">
+              <span>👤 Busenur İpek</span>
+              <span>📅 5 Nisan 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="Image.png" alt="Siberay" />
+        <p>Ondokuz Mayıs Üniversitesi Siber Güvenlik Topluluğu</p>
+      </div>
+      <div class="footer-col">
+        <h4>Sayfalar</h4>
+        <ul>
+          <li><a href="index.html">Ana Sayfa</a></li>
+          <li><a href="hakkimizda.html">Hakkımızda</a></li>
+          <li><a href="etkinlikler.html">Etkinlikler</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/omusiberay/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/omusiberay/" target="_blank">LinkedIn</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Siberay — OMÜ Siber Güvenlik Topluluğu</p>
+      <p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,374 +1,430 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="dark">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OMÜ Siberay Topluluğu</title>
+  <title>Siberay | Ana Sayfa</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 2rem;
+    }
+
+    .hero-bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(10,132,255,0.12) 0%, transparent 70%);
+      top: 10%; left: -10%;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(192,57,43,0.08) 0%, transparent 70%);
+      bottom: 10%; right: -5%;
+    }
+
+    .hero-content {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border: 1px solid rgba(0,212,255,0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      background: rgba(0,212,255,0.05);
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-cyan);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3rem, 10vw, 6.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      letter-spacing: -1px;
+    }
+
+    .hero-title .accent { color: var(--accent-cyan); }
+    .hero-title .red { color: #e74c3c; }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 550px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      animation: bounce 2s infinite;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent-blue), transparent);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── STATS BAR ─── */
+    .stats-bar {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+    }
+
+    .stats-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+
+    /* ─── FEATURES ─── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(10,132,255,0.04));
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(10,132,255,0.1);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-box {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-red), var(--accent-blue), var(--accent-cyan));
+    }
+
+    .cta-box h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    /* ─── ANIMATE ─── */
+    .animate {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .cta-box { padding: 2.5rem 1.5rem; }
+    }
+  </style>
 </head>
 <body>
 
   <!-- NAVBAR -->
-  <header class="navbar" id="navbar">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <!-- Logo placeholder — gerçek logo eklenecek -->
-        <a href="Image.png" class="nav-logo">
-  <img src="Image.png" alt="Siberay Logo" style="height: 44px; width: auto;">
-</a>
-      </a>
-      <nav class="nav-links">
-        <a href="#hero">Ana Sayfa</a>
-        <a href="#about">Hakkımızda</a>
-        <a href="#events">Etkinliklerimiz</a>
-        <a href="#blog">Blog</a>
-      </nav>
-      <div class="nav-actions">
-        <a href="https://www.instagram.com/omusiberay/" class="nav-social" target="_blank" aria-label="Instagram">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-</a>
-
-<a href="https://www.linkedin.com/company/omusiberay/" class="nav-social" target="_blank" aria-label="LinkedIn">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4a2 2 0 014 0v4M12 10v7"/></svg>
-</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Temayı değiştir">
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        </button>
-        <button class="nav-hamburger" id="hamburger" aria-label="Menü">
-          <span></span><span></span><span></span>
-        </button>
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="Image.png" alt="Siberay Logo" />
+      <div class="nav-brand-text">
+        <span class="nav-brand-title">Siberay</span>
+        <span class="nav-brand-sub">OMÜ Siber Güvenlik Topluluğu</span>
       </div>
-    </div>
-  </header>
+    </a>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-bg-grid"></div>
-    <div class="hero-content">
-      <div class="hero-badge">
-<div class="logo-circle logo-inner--sm">
-  <img src="Image.png" alt="Siberay Logo" style="width: 80%; height: auto; display: block;">
-</div>        OMÜ Siberay Topluluğu
-      </div>
-      <h1 class="hero-title">Siber Güvenlikte<br>Birlikte Daha Güçlüyüz</h1>
-      <p class="hero-desc">Siber güvenlik alanında bilgi paylaşımı, network oluşturma ve beceri geliştirme için tasarlanmış bir topluluk. CTF yarışmalarından workshop'lara, temel eğitimlerden ileri seviye araştırmalara kadar geniş bir yelpazeyi kapsıyoruz.</p>
-      <div class="hero-cta">
-        <a href="#about" class="btn btn--primary">Daha Fazla Bilgi <span class="btn-arrow">→</span></a>
-        <a href="#events" class="btn btn--outline">Etkinliklerimiz</a>
-      </div>
-    </div>
-  </section>
+    <button class="hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
 
-  <!-- HAKKIMIZDA -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-text">
-          <h2 class="section-title">Hakkımızda</h2>
-          <p>Siber güvenlik alanında tutkulu bir topluluk olarak, bilgi paylaşımı ve sürekli öğrenme ilkesiyle hareket ediyoruz. Amacımız, siber güvenlik alanında kariyer yapmak isteyen herkese rehberlik etmek ve bu alanda profesyonellerin deneyimlerini paylaşabilecekleri bir platform oluşturmak.</p>
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="hakkimizda.html">Hakkımızda</a></li>
+      <li><a href="etkinlikler.html">Etkinlikler</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg-orb orb-1"></div>
+      <div class="hero-bg-orb orb-2"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>OMÜ Siber Güvenlik Topluluğu</span>
         </div>
-        <div class="about-features">
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div>
-              <h3>Güvenlik Odaklı</h3>
-              <p>Etik hacking ve savunma mekanizmaları konusunda en güncel bilgileri paylaşıyoruz.</p>
-            </div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-            </div>
-            <div>
-              <h3>Hedef Odaklı Öğrenme</h3>
-              <p>Pratik senaryolar ve gerçek dünya problemleri üzerinden beceri geliştirme.</p>
-            </div>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </div>
-            <div>
-              <h3>Topluluk Ruhu</h3>
-              <p>Paylaşımcı, destekleyici ve kapsayıcı bir ortam oluşturuyoruz.</p>
-            </div>
-          </div>
+        <h1 class="hero-title">
+          SIBER<span class="accent">AY</span><br/>
+          <span style="font-size: 0.45em; letter-spacing: 6px; font-weight: 400; color: var(--text-secondary)">TOPLULUĞU</span>
+        </h1>
+        <p class="hero-desc">
+          Ondokuz Mayıs Üniversitesi'nin siber güvenlik alanında öncü öğrenci topluluğu.
+          Birlikte öğreniyor, keşfediyor ve güvenli bir dijital gelecek inşa ediyoruz.
+        </p>
+        <div class="hero-cta">
+          <a href="hakkimizda.html" class="btn btn-primary">Bizi Tanı →</a>
+          <a href="etkinlikler.html" class="btn btn-outline">Etkinlikler</a>
         </div>
       </div>
 
-      <!-- YÖNETİM KURULU -->
-      <div class="board-section">
-        <h2 class="section-title section-title--center">Yönetim Kurulu</h2>
-        <div class="board-grid">
-          <div class="board-card">
-            <div class="board-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h4>Berrak Sever</h4>
-            <span>Topluluk Başkanı</span>
-          </div>
-          <div class="board-card">
-            <div class="board-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h4>Muhammed Halil Solucak</h4>
-            <span>Topluluk Başkan Yardımcısı</span>
-          </div>
-          <div class="board-card">
-            <div class="board-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h4>Busenur İpek</h4>
-            <span>Yönetim Kurulu Üyesi</span>
-          </div>
-          <div class="board-card">
-            <div class="board-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h4>Nilgün Alpar</h4>
-            <span>Yönetim Kurulu Üyesi</span>
-          </div>
-          <div class="board-card">
-            <div class="board-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h4>Zeynep Erva Akgül</h4>
-            <span>Yönetim Kurulu Üyesi</span>
-          </div>
-          <div class="board-card">
-            <div class="board-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h4>Medine Aksoy</h4>
-            <span>Yönetim Kurulu Üyesi</span>
-          </div>
-          <div class="board-card">
-            <div class="board-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h4>Zeynep Naz Daşdemir</h4>
-            <span>Yönetim Kurulu Üyesi</span>
-          </div>
+      <div class="hero-scroll">
+        <span>SCROLL</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div class="animate">
+          <div class="stat-num">200+</div>
+          <div class="stat-label">Aktif Üye</div>
+        </div>
+        <div class="animate">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Etkinlik</div>
+        </div>
+        <div class="animate">
+          <div class="stat-num">30+</div>
+          <div class="stat-label">Blog Yazısı</div>
+        </div>
+        <div class="animate">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Yıl</div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ETKİNLİKLERİMİZ -->
-  <section class="events" id="events">
-    <div class="container">
-      <h2 class="section-title section-title--center">Etkinliklerimiz</h2>
-      <p class="section-subtitle">Siber güvenlik yolculuğunuzda size yardımcı olacak çeşitli kaynak ve etkinlikler.</p>
-      <div class="events-grid">
-        <div class="event-card">
-          <div class="event-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-          </div>
+    <!-- FEATURES -->
+    <section class="section">
+      <div class="section-header animate">
+        <span class="section-label">// ne yapıyoruz</span>
+        <h2 class="section-title">Odak <span>Alanlarımız</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card animate">
+          <div class="feature-icon">🛡️</div>
+          <h3>Güvenlik Eğitimleri</h3>
+          <p>CTF yarışmaları, atölye çalışmaları ve seminerlerle siber güvenlik bilginizi geliştirin.</p>
+        </div>
+        <div class="feature-card animate">
+          <div class="feature-icon">🔍</div>
+          <h3>Araştırma & Geliştirme</h3>
+          <p>Zararlı yazılım analizi, ağ güvenliği ve kriptografi alanlarında aktif araştırmalar yürütün.</p>
+        </div>
+        <div class="feature-card animate">
+          <div class="feature-icon">🤝</div>
+          <h3>Topluluk & Networking</h3>
+          <p>Sektör profesyonelleri ve diğer öğrencilerle bağlantı kurarak kariyer ağınızı genişletin.</p>
+        </div>
+        <div class="feature-card animate">
+          <div class="feature-icon">🏆</div>
           <h3>CTF Yarışmaları</h3>
-          <p>Düzenli olarak düzenlenen Capture The Flag yarışmaları ile yeteneklerinizi test edin ve geliştirin.</p>
+          <p>Ulusal ve uluslararası Capture The Flag yarışmalarına katılarak kendinizi kanıtlayın.</p>
         </div>
-        <div class="event-card">
-          <div class="event-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <h3>Aktif Topluluk</h3>
-          <p>Siber güvenlik meraklıları ve profesyonellerle tanışın, deneyimlerinizi paylaşın.</p>
+        <div class="feature-card animate">
+          <div class="feature-icon">📚</div>
+          <h3>Bilgi Paylaşımı</h3>
+          <p>Blog yazıları ve teknik raporlarla öğrendiklerinizi topluluğa aktarın.</p>
         </div>
-        <div class="event-card">
-          <div class="event-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          </div>
-          <h3>Workshop & Eğitimler</h3>
-          <p>Uzman eğitmenler eşliğinde pratik odaklı workshop ve eğitimlere katılın.</p>
-        </div>
-        <div class="event-card">
-          <div class="event-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          </div>
-          <h3>Bilgi Kaynakları</h3>
-          <p>Kapsamlı dokümanlar, writeup'lar ve eğitim materyallerine erişin.</p>
-        </div>
-        <div class="event-card">
-          <div class="event-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-          </div>
-          <h3>Sertifikalar</h3>
-          <p>Tamamladığınız eğitimler ve yarışmalar için dijital sertifikalar kazanın.</p>
-        </div>
-        <div class="event-card">
-          <div class="event-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
-          <h3>Hızlı Destek</h3>
-          <p>Karşılaştığınız zorluklarda topluluk desteği ve mentörlük alın.</p>
+        <div class="feature-card animate">
+          <div class="feature-icon">⚡</div>
+          <h3>Pratik Uygulamalar</h3>
+          <p>Gerçek dünya senaryolarını simüle eden lab ortamlarında pratik beceriler kazanın.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- BLOG -->
-  <section class="blog" id="blog">
-    <div class="container">
-      <h2 class="section-title section-title--center">Blog</h2>
-      <p class="section-subtitle">Siber güvenlik dünyasından en güncel haberler, makaleler ve analizler.</p>
-      <div class="blog-grid">
-        <article class="blog-card">
-          <div class="blog-img blog-img--ai"></div>
-          <div class="blog-body">
-            <span class="blog-tag">Yapay Zeka</span>
-            <h3>Siber Güvenlikte Yapay Zeka: Fırsatlar ve Tehditler</h3>
-            <p>Yapay zeka teknolojilerinin siber güvenlik alanında nasıl kullanıldığını ve beraberinde getirdiği yeni tehditleri keşfedin.</p>
-            <div class="blog-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                Berrak Sever
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                15 Nisan 2026
-              </span>
-            </div>
-            <a href="#" class="blog-read">Devamını Oku →</a>
-          </div>
-        </article>
-        <article class="blog-card">
-          <div class="blog-img blog-img--ransomware"></div>
-          <div class="blog-body">
-            <span class="blog-tag">Güvenlik</span>
-            <h3>Ransomware Saldırılarından Korunma Yöntemleri</h3>
-            <p>Ransomware saldırılarının artan tehdidi karşısında kurumların ve bireylerin alabileceği önlemler nelerdir?</p>
-            <div class="blog-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                Muhammed Halil Solucak
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                10 Nisan 2026
-              </span>
-            </div>
-            <a href="#" class="blog-read">Devamını Oku →</a>
-          </div>
-        </article>
-        <article class="blog-card">
-          <div class="blog-img blog-img--zerotrust"></div>
-          <div class="blog-body">
-            <span class="blog-tag">Mimari</span>
-            <h3>Zero Trust Mimarisi: Yeni Nesil Güvenlik Yaklaşımı</h3>
-            <p>Modern siber güvenlik stratejilerinin temel taşı haline gelen Zero Trust mimarisini detaylı olarak inceliyoruz.</p>
-            <div class="blog-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                Busenur İpek
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                5 Nisan 2026
-              </span>
-            </div>
-            <a href="#" class="blog-read">Devamını Oku →</a>
-          </div>
-        </article>
-        <article class="blog-card">
-          <div class="blog-img blog-img--cloud"></div>
-          <div class="blog-body">
-            <span class="blog-tag">Bulut Güvenliği</span>
-            <h3>Bulut Güvenliği: AWS, Azure ve GCP Karşılaştırması</h3>
-            <p>Bulut sağlayıcıların güvenlik özelliklerini karşılaştırıyor ve en iyi uygulamaları paylaşıyoruz.</p>
-            <div class="blog-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                Nilgün Alpar
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                1 Nisan 2026
-              </span>
-            </div>
-            <a href="#" class="blog-read">Devamını Oku →</a>
-          </div>
-        </article>
-        <article class="blog-card">
-          <div class="blog-img blog-img--phishing"></div>
-          <div class="blog-body">
-            <span class="blog-tag">Sosyal Mühendislik</span>
-            <h3>Phishing Saldırıları: Sosyal Mühendislik Taktikleri</h3>
-            <p>Siber suçların en çok kullandığı yöntemlerden biri olan phishing saldırılarını tanımak ve önlemek.</p>
-            <div class="blog-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                Zeynep Erva Akgül
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                28 Mart 2026
-              </span>
-            </div>
-            <a href="#" class="blog-read">Devamını Oku →</a>
-          </div>
-        </article>
-        <article class="blog-card">
-          <div class="blog-img blog-img--pentest"></div>
-          <div class="blog-body">
-            <span class="blog-tag">Penetrasyon Testi</span>
-            <h3>Penetrasyon Testleri: Etik Hacking Rehberi</h3>
-            <p>Penetrasyon testlerinin temellerini öğrenmek ve kendi güvenlik testlerinizi yapmaya başlayın.</p>
-            <div class="blog-meta">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                Medine Aksoy
-              </span>
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                25 Mart 2026
-              </span>
-            </div>
-            <a href="#" class="blog-read">Devamını Oku →</a>
-          </div>
-        </article>
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-box animate">
+        <h2>Aramıza <span style="color:var(--accent-cyan)">Katıl</span></h2>
+        <p>Siber güvenlik dünyasına adım atmak ve OMÜ'nün en güçlü teknik topluluğunun bir parçası olmak ister misin?</p>
+        <a href="hakkimizda.html" class="btn btn-primary">Daha Fazla Bilgi →</a>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="footer-logo">
-            <div class="logo-circle logo-circle--sm"><span>S</span></div>
-            <span>OMÜ Siberay Topluluğu</span>
-          </div>
-          <p>Ondokuz Mayıs Üniversitesi bünyesinde siber güvenlik meraklıları ve profesyoneller için tasarlanmış eğitim ve network platformu.</p>
-          <div class="footer-socials">
-            <a href="#" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-            </a>
-            <a href="#" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="#" aria-label="Email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </a>
-          </div>
-        </div>
-        <div class="footer-links">
-          <h4>Hızlı Linkler</h4>
-          <ul>
-            <li><a href="#hero">Ana Sayfa</a></li>
-            <li><a href="#about">Hakkımızda</a></li>
-            <li><a href="#events">Etkinliklerimiz</a></li>
-            <li><a href="#blog">Blog</a></li>
-          </ul>
-        </div>
-        <div class="footer-links">
-          <h4>Kaynaklar</h4>
-          <ul>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Writeup'lar</a></li>
-            <li><a href="#">Eğitimler</a></li>
-            <li><a href="#">SSS</a></li>
-          </ul>
-        </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="Image.png" alt="Siberay" />
+        <p>Ondokuz Mayıs Üniversitesi Siber Güvenlik Topluluğu</p>
       </div>
-      <div class="footer-bottom">
-        <p>© 2026 OMÜ Siberay Topluluğu. Tüm hakları saklıdır.</p>
+      <div class="footer-col">
+        <h4>Sayfalar</h4>
+        <ul>
+          <li><a href="index.html">Ana Sayfa</a></li>
+          <li><a href="hakkimizda.html">Hakkımızda</a></li>
+          <li><a href="etkinlikler.html">Etkinlikler</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
       </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">E-posta</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Siberay — OMÜ Siber Güvenlik Topluluğu</p>
+      <p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>
