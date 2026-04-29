@@ -96,9 +96,16 @@
     function girisYap() {
       const email = document.getElementById('loginEmail').value;
       const pass = document.getElementById('loginPass').value;
-      auth.signInWithEmailAndPassword(email, pass).catch(error => {
-        document.getElementById('loginHata').style.display = 'block';
-      });
+
+      // Önce Firebase'e emir ver: "Oturumu sadece bu sekme açıkken koru (SESSION)"
+      auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(() => {
+          // Ayar yapıldıktan sonra asıl girişi tetikle
+          return auth.signInWithEmailAndPassword(email, pass);
+        })
+        .catch(error => {
+          document.getElementById('loginHata').style.display = 'block';
+        });
     }
 
     function cikisYap() { auth.signOut(); }
