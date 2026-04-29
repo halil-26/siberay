@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siberay | Haber Detayı</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .article-content { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
+    .article-content p { margin-bottom: 1.5rem; }
+    .article-content h3 { color: var(--text-primary); font-family: 'Rajdhani'; font-size: 1.6rem; margin: 2rem 0 1rem; }
+    .article-content strong { color: var(--accent-cyan); }
+    .loader { text-align: center; padding: 5rem; color: var(--accent-cyan); font-family: 'Share Tech Mono'; font-size: 1.2rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand"><img src="Image.png" alt="Siberay Logo" /><div class="nav-brand-text"><span class="nav-brand-title">Siberay</span><span class="nav-brand-sub">OMÜ Siber Güvenlik Topluluğu</span></div></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="etkinlikler.html">Etkinlikler</a></li><li><a href="gazete.html" class="active">Gazete</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <article class="section" style="max-width: 800px; margin: 0 auto; padding-top: 3rem;" id="haber-konteyner">
+      <div class="loader">Veri merkezinden içerik çekiliyor...</div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-inner"><div class="footer-brand"><img src="Image.png" alt="Siberay" /><p>Ondokuz Mayıs Üniversitesi Siber Güvenlik Topluluğu</p></div></div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 1. BURAYA KENDİ FİREBASE ANAHTARLARINI YAPIŞTIR
+    const firebaseConfig = {    
+  apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
+  authDomain: "siberay.firebaseapp.com",
+  projectId: "siberay",
+  storageBucket: "siberay.firebasestorage.app",
+  messagingSenderId: "953124646102",
+  appId: "1:953124646102:web:6757b08c2aeb652140ed77",
+  measurementId: "G-RGLC0Y937Q"
+};
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // 2. Adresteki ID'yi yakala (Örn: ?id=abc123xd)
+    const urlParams = new URLSearchParams(window.location.search);
+    const haberId = urlParams.get('id');
+    const konteyner = document.getElementById('haber-konteyner');
+
+    // 3. Eğer ID yoksa geri gönder
+    if (!haberId) {
+      konteyner.innerHTML = "<h2 style='color: red; text-align: center;'>Haber bulunamadı veya link hatalı!</h2>";
+    } else {
+      // 4. ID varsa veritabanından o haberi çek
+      db.collection("haberler").doc(haberId).get().then((doc) => {
+        if (doc.exists) {
+          const haber = doc.data();
+          
+          // 5. Haberi Ekrana Bas! (İşte Admin panelinden gelen HTML'in işlendiği yer)
+          konteyner.innerHTML = `
+            <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+              <span class="tag tag-blue">Siberay Gazete</span>
+              <span style="font-family: 'Share Tech Mono'; color: var(--text-muted); font-size: 0.9rem;">📅 ${haber.tarih}</span>
+            </div>
+            
+            <h1 style="font-family: 'Rajdhani'; font-size: 2.5rem; color: var(--text-primary); margin-bottom: 2rem;">${haber.baslik}</h1>
+            
+            <div style="width: 100%; height: 400px; border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; border: 1px solid var(--border);">
+              <img src="${haber.gorsel}" alt="Kapak Görseli" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            
+            <div class="article-content">
+              ${haber.icerik}
+            </div>
+          `;
+        } else {
+          konteyner.innerHTML = "<h2 style='color: red; text-align: center;'>Bu haber silinmiş veya yayından kaldırılmış.</h2>";
+        }
+      }).catch((error) => {
+        console.log("Hata:", error);
+        konteyner.innerHTML = "<h2 style='color: red; text-align: center;'>Veritabanı bağlantı hatası!</h2>";
+      });
+    }
+  </script>
+</body>
+</html>

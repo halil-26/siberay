@@ -6,13 +6,16 @@
   <title>Siberay | Gazete</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .gazete-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
-    .gazete-card { padding: 0; display: flex; flex-direction: column; overflow: hidden; }
-    .gazete-img-wrapper { height: 220px; overflow: hidden; border-bottom: 1px solid var(--border); }
-    .gazete-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .gazete-card:hover .gazete-img-wrapper img { transform: scale(1.05); }
-    .gazete-content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
-    .gazete-meta { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .blog-card { padding: 0; display: flex; flex-direction: column; overflow: hidden; text-decoration: none; color: inherit; }
+    .blog-img-wrapper { height: 220px; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .blog-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .blog-card:hover .blog-img-wrapper img { transform: scale(1.05); }
+    .blog-content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+    .blog-meta { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+    
+    /* Yükleniyor animasyonu */
+    .loader { text-align: center; padding: 3rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace; grid-column: 1 / -1; }
   </style>
 </head>
 <body>
@@ -22,7 +25,7 @@
       <img src="Image.png" alt="Siberay Logo" />
       <div class="nav-brand-text">
         <span class="nav-brand-title">Siberay</span>
-        <span class="nav-brand-sub">OMÜ Siberay Topluluğu</span>
+        <span class="nav-brand-sub">OMÜ Siber Güvenlik Topluluğu</span>
       </div>
     </a>
     <button class="hamburger" id="hamburger" aria-label="Menü">
@@ -31,8 +34,8 @@
     <ul class="nav-links">
       <li><a href="index.html">Ana Sayfa</a></li>
       <li><a href="hakkimizda.html">Hakkımızda</a></li>
-      <li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li>
-      <li><a href="gazete.html">Gazete</a></li>
+      <li><a href="etkinlikler.html">Etkinlikler</a></li>
+      <li><a href="gazete.html" class="active">Gazete</a></li>
     </ul>
   </nav>
 
@@ -40,89 +43,94 @@
     <section class="section">
       <div class="section-header animate">
         <span class="section-label">// siber istihbarat</span>
-        <h2 class="section-title">Gazete & <span>Makaleler</span></h2>
+        <h2 class="section-title">Siberay <span>Gazete</span></h2>
         <div class="section-divider"></div>
       </div>
 
-      <div class="gazete-grid">
-       <!-- <div class="card gazete-card animate">
-          <div class="gazete-img-wrapper">
-            <img src="yapay-zeka.jpg" alt="Yapay Zeka">
-          </div>
-          <div class="gazete-content">
-            <span class="tag tag-blue" style="width: fit-content; margin-bottom: 1rem;">Yapay Zeka</span>
-            <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">Siber Güvenlikte Yapay Zeka: Fırsatlar ve Tehditler</h3>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Yapay zeka teknolojilerinin siber güvenlik alanında nasıl kullanıldığını ve beraberinde getirdiği yeni tehditleri keşfedin.</p>
-            <div class="gazete-meta">
-              <span>👤 Nilgün Alpar</span>
-              <span>📅 15 Nisan 2026</span>
-            </div> -->
-          </div>
-        </div>
-
-        <!-- <div class="card gazete-card animate">
-          <div class="gazete-img-wrapper">
-            <img src="guvenlik.jpg" alt="Güvenlik">
-          </div>
-          <div class="gazete-content">
-            <span class="tag tag-red" style="width: fit-content; margin-bottom: 1rem;">Güvenlik</span>
-            <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">Ransomware Saldırılarından Korunma Yöntemleri</h3>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Fidye yazılımı saldırılarının artan tehdidi karşısında kurumların ve bireylerin alabileceği önlemler nelerdir?</p>
-            <div class="gazete-meta">
-              <span>👤 Nilgün Alpar</span>
-              <span>📅 10 Nisan 2026</span>
-            </div> -->
-          </div>
-        </div>
-
-        <!-- <div class="card gazete-card animate">
-          <div class="gazete-img-wrapper">
-            <img src="mimari.jpg" alt="Mimari">
-          </div>
-          <div class="gazete-content">
-            <span class="tag tag-green" style="width: fit-content; margin-bottom: 1rem;">Mimari</span>
-            <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">Zero Trust Mimarisi: Yeni Nesil Yaklaşım</h3>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Modern siber güvenlik stratejilerinin temel taşı haline gelen Zero Trust mimarisini detaylı olarak inceliyoruz.</p>
-            <div class="gazete-meta">
-              <span>👤 Nilgün Alpar</span>
-              <span>📅 5 Nisan 2026</span>
-            </div> -->
-          </div>
-        </div>
+      <div class="blog-grid" id="haber-listesi">
+        <div class="loader">Veritabanına bağlanılıyor... Sistem logları çekiliyor...</div>
       </div>
+
     </section>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="Image.png" alt="Siberay" />
-        <p>Ondokuz Mayıs Üniversitesi Siberay Topluluğu</p>
-      </div>
-      <div class="footer-col">
-        <h4>Sayfalar</h4>
-        <ul>
-          <li><a href="index.html">Ana Sayfa</a></li>
-          <li><a href="hakkimizda.html">Hakkımızda</a></li>
-          <li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li>
-          <li><a href="gazete.html">Gazete</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>İletişim</h4>
-        <ul>
-          <li><a href="https://www.instagram.com/omusiberay/" target="_blank">Instagram</a></li>
-          <li><a href="https://www.linkedin.com/company/omusiberay/" target="_blank">LinkedIn</a></li>
-          <li><a href="#">GitHub</a></li>
-        </ul>
-      </div>
+      <div class="footer-brand"><img src="Image.png" alt="Siberay" /><p>Ondokuz Mayıs Üniversitesi Siber Güvenlik Topluluğu</p></div>
+      <div class="footer-col"><h4>Sayfalar</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="etkinlikler.html">Etkinlikler</a></li><li><a href="gazete.html">Gazete</a></li></ul></div>
+      <div class="footer-col"><h4>İletişim</h4><ul><li><a href="https://www.instagram.com/omusiberay/" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/company/omusiberay/" target="_blank">LinkedIn</a></li><li><a href="#">GitHub</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 Siberay — OMÜ Siberay Topluluğu</p>
-      <p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p>
-    </div>
+    <div class="footer-bottom"><p>© 2026 Siberay — OMÜ Siber Güvenlik Topluluğu</p><p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p></div>
   </footer>
 
   <script src="scripts.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 1. BURAYA KENDİ FİREBASE ANAHTARLARINI YAPIŞTIR
+    const firebaseConfig = {
+  apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
+  authDomain: "siberay.firebaseapp.com",
+  projectId: "siberay",
+  storageBucket: "siberay.firebasestorage.app",
+  messagingSenderId: "953124646102",
+  appId: "1:953124646102:web:6757b08c2aeb652140ed77",
+  measurementId: "G-RGLC0Y937Q"
+};
+
+    // Firebase'i Başlat
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const haberListesi = document.getElementById('haber-listesi');
+
+    // Veritabanından haberleri çek (En yeni en üstte olacak şekilde)
+    db.collection("haberler").orderBy("zamanDamgasi", "desc").get().then((querySnapshot) => {
+      
+      // Eğer veritabanı boşsa
+      if (querySnapshot.empty) {
+        haberListesi.innerHTML = `
+          <div class="card" style="text-align: center; padding: 4rem 2rem; grid-column: 1 / -1; border-style: dashed; border-color: var(--border); background: transparent;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📰</div>
+            <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem;">İçerikler Hazırlanıyor</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Siber istihbarat bültenleri çok yakında burada olacak.</p>
+          </div>`;
+        return;
+      }
+
+      // Veriler geldiyse loader'ı temizle
+      haberListesi.innerHTML = '';
+
+      // Her bir haber için bir kart oluştur
+      querySnapshot.forEach((doc) => {
+        const haber = doc.data();
+        
+        // Kartın HTML kalıbı
+        const kartHTML = `
+              <a href="haber-detay.html?id=${doc.id}" class="card blog-card animate visible">            <div class="blog-img-wrapper">
+              <img src="${haber.gorsel}" alt="${haber.baslik}">
+            </div>
+            <div class="blog-content">
+              <span class="tag tag-cyan" style="width: fit-content; margin-bottom: 1rem;">Haber</span>
+              <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">${haber.baslik}</h3>
+              <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">${haber.ozet}</p>
+              <div class="blog-meta">
+                <span>Ondokuz Mayıs Üniversitesi</span>
+                <span>📅 ${haber.tarih}</span>
+              </div>
+            </div>
+          </a>
+        `;
+        
+        // Kartı listeye ekle
+        haberListesi.innerHTML += kartHTML;
+      });
+    }).catch((error) => {
+      console.log("Hata:", error);
+      haberListesi.innerHTML = "<div class='loader' style='color: red;'>Veritabanı bağlantı hatası! Yetkileri kontrol edin.</div>";
+    });
+  </script>
 </body>
 </html>
