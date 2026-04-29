@@ -41,6 +41,20 @@
 
       <form id="haberForm">
         <div class="form-group"><label>HABER BAŞLIĞI</label><input type="text" id="baslik" class="form-control" required></div>
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+          <div>
+            <label>> YAYIN TARİHİ</label>
+            <input type="text" id="tarih" class="form-control" required placeholder="Örn: 29.04.2026">
+          </div>
+          <div>
+            <label>> YAZAR / EKLEYEN</label>
+            <input type="text" id="yazar" class="form-control" required placeholder="Örn: Nilgün Alpar">
+          </div>
+          <div>
+            <label>> DÜZENLEYEN</label>
+            <input type="text" id="duzenleyen" class="form-control" placeholder=" (Opsiyonel)">
+          </div>
+        </div>  
         <div class="form-group"><label>KAPAK FOTOĞRAFI</label><input type="file" id="gorselDosyasi" class="form-control" accept="image/*" required></div>
         <div class="form-group"><label>KISA ÖZET</label><input type="text" id="ozet" class="form-control" required></div>
         <div class="form-group"><label>HABER İÇERİĞİ</label><textarea id="icerik" class="form-control" required placeholder="<p>Paragraf</p>... İstediğin yere görsel kodunu yapıştır."></textarea></div>
@@ -146,10 +160,12 @@
 
         await db.collection("haberler").add({
           baslik: document.getElementById('baslik').value,
-          gorsel: data.data.url,
+          gorsel: data.secure_url || data.data.url, 
           ozet: document.getElementById('ozet').value,
           icerik: document.getElementById('icerik').value,
-          tarih: new Date().toLocaleDateString('tr-TR'),
+          tarih: document.getElementById('tarih').value, // Artık otomatik değil, senin yazdığın tarih
+          yazar: document.getElementById('yazar').value,
+          duzenleyen: document.getElementById('duzenleyen').value || "", // Boş bırakılırsa hata vermesin
           zamanDamgasi: firebase.firestore.FieldValue.serverTimestamp()
         });
 

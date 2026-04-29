@@ -26,9 +26,26 @@
 <body>
 
   <nav class="navbar">
-    <a href="index.html" class="nav-brand"><img src="Image.png" alt="Siberay Logo" /><div class="nav-brand-text"><span class="nav-brand-title">Siberay</span><span class="nav-brand-sub">OMÜ Siberay Topluluğu</span></div></a>
+    <a href="index.html" class="nav-brand">
+      <img src="Image.png" alt="Siberay Logo" />
+      <div class="nav-brand-text">
+        <span class="nav-brand-title">Siberay</span>
+        <span class="nav-brand-sub">OMÜ Siberay Topluluğu</span>
+      </div>
+    </a>
     <ul class="nav-links">
-      <li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="etkinlikler.html">Etkinlikler</a></li><li><a href="gazete.html" class="active">Gazete</a></li>
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="hakkimizda.html">Hakkımızda</a></li>
+      <li><a href="etkinlikler.html">Etkinlikler</a></li>
+      <li><a href="gazete.html" class="active">Gazete</a></li>
+      
+      <li class="join-dropdown">
+        <a href="#" class="join-btn">Aramıza Katıl_</a>
+        <div class="dropdown-content">
+          <a href="https://www.instagram.com/omusiberay/" target="_blank">> Instagram</a>
+          <a href="https://www.linkedin.com/company/omusiberay/" target="_blank">> LinkedIn</a>
+        </div>
+      </li>
     </ul>
   </nav>
 
@@ -39,48 +56,75 @@
   </main>
 
   <footer>
-    <div class="footer-inner"><div class="footer-brand"><img src="Image.png" alt="Siberay" /><p>Ondokuz Mayıs Üniversitesi Siberay Topluluğu</p></div></div>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="Image.png" alt="Siberay Logo" />
+        <p>Ondokuz Mayıs Üniversitesi Siberay Topluluğu</p>
+      </div>
+      <div class="footer-col">
+        <h4>Sayfalar</h4>
+        <ul>
+          <li><a href="index.html">Ana Sayfa</a></li>
+          <li><a href="hakkimizda.html">Hakkımızda</a></li>
+          <li><a href="etkinlikler.html">Etkinlikler</a></li>
+          <li><a href="gazete.html">Gazete</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/omusiberay/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/omusiberay/" target="_blank">LinkedIn</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Siberay — OMÜ Siberay Topluluğu</p>
+      <p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p>
+    </div>
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // 1. BURAYA KENDİ FİREBASE ANAHTARLARINI YAPIŞTIR
+    // 1. FİREBASE ANAHTARLARI
     const firebaseConfig = {    
-  apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
-  authDomain: "siberay.firebaseapp.com",
-  projectId: "siberay",
-  storageBucket: "siberay.firebasestorage.app",
-  messagingSenderId: "953124646102",
-  appId: "1:953124646102:web:6757b08c2aeb652140ed77",
-  measurementId: "G-RGLC0Y937Q"
-};
+      apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
+      authDomain: "siberay.firebaseapp.com",
+      projectId: "siberay",
+      storageBucket: "siberay.firebasestorage.app",
+      messagingSenderId: "953124646102",
+      appId: "1:953124646102:web:6757b08c2aeb652140ed77",
+      measurementId: "G-RGLC0Y937Q"
+    };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 2. Adresteki ID'yi yakala (Örn: ?id=abc123xd)
     const urlParams = new URLSearchParams(window.location.search);
     const haberId = urlParams.get('id');
     const konteyner = document.getElementById('haber-konteyner');
 
-    // 3. Eğer ID yoksa geri gönder
     if (!haberId) {
       konteyner.innerHTML = "<h2 style='color: red; text-align: center;'>Haber bulunamadı veya link hatalı!</h2>";
     } else {
-      // 4. ID varsa veritabanından o haberi çek
       db.collection("haberler").doc(haberId).get().then((doc) => {
         if (doc.exists) {
           const haber = doc.data();
           
-          // 5. Haberi Ekrana Bas! (İşte Admin panelinden gelen HTML'in işlendiği yer)
           konteyner.innerHTML = `
             <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
               <span class="tag tag-blue">Siberay Gazete</span>
-              <span style="font-family: 'Share Tech Mono'; color: var(--text-muted); font-size: 0.9rem;">📅 ${haber.tarih}</span>
             </div>
             
-            <h1 style="font-family: 'Rajdhani'; font-size: 2.5rem; color: var(--text-primary); margin-bottom: 2rem;">${haber.baslik}</h1>
+            <h1 style="font-family: 'Rajdhani'; font-size: 2.5rem; color: var(--text-primary); margin-bottom: 1rem;">${haber.baslik}</h1>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+              <span><span style="color: var(--accent-cyan);">// TARİH:</span> ${haber.tarih || 'Bilinmiyor'}</span>
+              <span><span style="color: var(--accent-cyan);">// YAZAR:</span> ${haber.yazar || 'Siberay Ekibi'}</span>
+              ${haber.duzenleyen ? `<span><span style="color: var(--accent-cyan);">// EDİTÖR:</span> ${haber.duzenleyen}</span>` : ''}
+            </div>
             
             <div style="width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; background-color: var(--bg-secondary); text-align: center; border: 1px solid var(--border);">
               <img src="${haber.gorsel}" alt="Kapak Görseli" style="max-width: 100%; max-height: 500px; height: auto; object-fit: contain;">
