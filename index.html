@@ -404,5 +404,14 @@
   </footer>
 
   <script src="scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+  <script>
+    VanillaTilt.init(document.querySelectorAll(".card"), {
+      max: 5,        // Kartın maksimum dönme açısı
+      speed: 400,    // Dönüş hızı
+      glare: true,   // Üzerinden ışık yansıması (Efsane gösterir)
+      "max-glare": 0.1 // Işığın şiddeti
+    });
+  </script>
 </body>
 </html>
