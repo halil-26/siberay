@@ -119,7 +119,7 @@
         const data = await res.json();
         
         // Şık bir resim kodu oluştur (tasarımı bozmaması için genişlik %100 ayarlandı)
-        const htmlKodu = `<div style="margin: 2rem 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);"><img src="${data.data.url}" style="width: 100%; display: block;"></div>`;
+        const htmlKodu = `<img src="${data.data.url}" alt="Haber Görseli">`;
         document.getElementById('araGorselKodu').value = htmlKodu;
       } catch(e) { alert("Hata!"); }
       btn.innerHTML = "Kodu Üret";
