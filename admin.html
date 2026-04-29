@@ -11,7 +11,9 @@
     .form-group label { display: block; margin-bottom: 0.5rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace; }
     .form-control { width: 100%; background: var(--bg-secondary); border: 1px solid var(--border); color: white; padding: 1rem; border-radius: 6px; font-family: 'Exo 2', sans-serif; }
     .form-control:focus { outline: none; border-color: var(--accent-blue); }
+    input[type="file"].form-control { padding: 0.7rem; }
     textarea.form-control { min-height: 150px; resize: vertical; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -26,8 +28,8 @@
       </div>
       
       <div class="form-group">
-        <label>> GÖRSEL URL (LİNK)</label>
-        <input type="text" id="gorsel" class="form-control" required placeholder="Örn: https://.../resim.jpg">
+        <label>> GÖRSEL YÜKLE (Bilgisayardan)</label>
+        <input type="file" id="gorselDosyasi" class="form-control" accept="image/*" required>
       </div>
 
       <div class="form-group">
@@ -36,13 +38,13 @@
       </div>
 
       <div class="form-group">
-        <label>> HABER İÇERİĞİ (Cart Curt Kısmı)</label>
-        <textarea id="icerik" class="form-control" required placeholder="Detaylı haberi buraya yazın... HTML etiketleri (<p>, <strong>) kullanabilirsiniz."></textarea>
+        <label>> HABER İÇERİĞİ (HTML Kullanabilirsiniz)</label>
+        <textarea id="icerik" class="form-control" required placeholder="Detaylı haberi buraya yazın..."></textarea>
       </div>
 
-      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 1.2rem;">🚀 SİSTEME YÜKLE (PUBLISH)</button>
+      <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 1.2rem;">🚀 SİSTEME YÜKLE</button>
     </form>
-    <div id="mesaj" style="margin-top: 1rem; text-align: center; color: #2ecc71; font-family: 'Share Tech Mono'; display: none;">Veri başarıyla veritabanına işlendi!</div>
+    <div id="mesaj" style="margin-top: 1rem; text-align: center; color: #2ecc71; font-family: 'Share Tech Mono'; display: none;">Veri ve Görsel başarıyla işlendi!</div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -50,7 +52,7 @@
 
   <script>
     // 1. BURAYA KENDİ FİREBASE ANAHTARLARINI YAPIŞTIR
-    const firebaseConfig = {    
+     const firebaseConfig = {    
   apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
   authDomain: "siberay.firebaseapp.com",
   projectId: "siberay",
@@ -60,39 +62,70 @@
   measurementId: "G-RGLC0Y937Q"
 };
 
-    // Firebase'i Başlat
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Form Gönderildiğinde Çalışacak Kod
-    document.getElementById('haberForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Sayfanın yenilenmesini engelle
-      
-      // Formdaki yazıları al
-      const baslik = document.getElementById('baslik').value;
-      const gorsel = document.getElementById('gorsel').value;
-      const ozet = document.getElementById('ozet').value;
-      const icerik = document.getElementById('icerik').value;
-      const tarih = new Date().toLocaleDateString('tr-TR');
+    // ImgBB API Anahtarın (Gizli Geçiş Kartı)
+    const imgbbAPIKey = "d3340ef4bc18e5057941ef5fcb3e5f37";
 
-      // Firestore "haberler" koleksiyonuna ekle
-      db.collection("haberler").add({
-        baslik: baslik,
-        gorsel: gorsel,
-        ozet: ozet,
-        icerik: icerik,
-        tarih: tarih,
-        zamanDamgasi: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then((docRef) => {
+    document.getElementById('haberForm').addEventListener('submit', async function(e) {
+      e.preventDefault(); 
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const orjinalYazi = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = "⏳ GÖRSEL İLETİLİYOR...";
+      submitBtn.disabled = true;
+
+      try {
+        const baslik = document.getElementById('baslik').value;
+        const ozet = document.getElementById('ozet').value;
+        const icerik = document.getElementById('icerik').value;
+        const tarih = new Date().toLocaleDateString('tr-TR');
+        
+        // 1. AŞAMA: Dosyayı al ve ImgBB API'sine fırlat
+        const dosya = document.getElementById('gorselDosyasi').files[0];
+        const formData = new FormData();
+        formData.append("image", dosya);
+        
+        const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`, {
+          method: "POST",
+          body: formData
+        });
+        
+        const imgbbData = await imgbbResponse.json();
+        
+        if (!imgbbData.success) {
+          throw new Error("Resim yüklenemedi!");
+        }
+
+        // ImgBB'nin bize verdiği o gizli ve kalıcı link!
+        const gorselURL = imgbbData.data.url;
+
+        submitBtn.innerHTML = "💾 VERİTABANINA YAZILIYOR...";
+
+        // 2. AŞAMA: ImgBB'den gelen linki ve yazıları Firestore'a kaydet
+        await db.collection("haberler").add({
+          baslik: baslik,
+          gorsel: gorselURL,
+          ozet: ozet,
+          icerik: icerik,
+          tarih: tarih,
+          zamanDamgasi: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Başarılı İşlem Sonucu
         document.getElementById('mesaj').style.display = 'block';
-        document.getElementById('haberForm').reset(); // Formu temizle
+        document.getElementById('haberForm').reset();
         setTimeout(() => document.getElementById('mesaj').style.display = 'none', 4000);
-      })
-      .catch((error) => {
-        console.error("Hata oluştu: ", error);
-        alert("Bir hata oluştu, konsola bak!");
-      });
+
+      } catch (error) {
+        console.error("Hata:", error);
+        alert("Bir hata oluştu! Lütfen konsolu kontrol et.");
+      } finally {
+        submitBtn.innerHTML = orjinalYazi;
+        submitBtn.disabled = false;
+      }
     });
   </script>
 </body>
