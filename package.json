@@ -1,0 +1,14 @@
+{
+  "name": "siberay",
+  "version": "1.0.0",
+  "description": "OMÜ Siberay Topluluğu Web Sitesi",
+  "scripts": {
+    "build": "echo 'Static HTML site - no build needed'"
+  },
+  "keywords": ["siber-guvenlik", "cybersecurity", "omu"],
+  "author": "Siberay Topluluğu",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
