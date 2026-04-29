@@ -6,10 +6,24 @@
   <title>Siberay | Gazete</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
     .blog-card { padding: 0; display: flex; flex-direction: column; overflow: hidden; text-decoration: none; color: inherit; }
-    .blog-img-wrapper { height: 220px; overflow: hidden; border-bottom: 1px solid var(--border); }
-    .blog-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .blog-img-wrapper { 
+      height: 220px; 
+      width: 100%;
+      background-color: var(--bg-secondary); /* Kartın rengiyle bütünleşsin */
+      border-bottom: 1px solid var(--border); 
+      overflow: hidden; 
+    }
+    
+    .blog-img-wrapper img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: contain; /* RESMİ ASLA KESME, TAMAMINI GÖSTER */
+      object-position: center; 
+      transition: transform 0.4s ease; 
+    }
+
     .blog-card:hover .blog-img-wrapper img { transform: scale(1.05); }
     .blog-content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
     .blog-meta { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
