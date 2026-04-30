@@ -6,13 +6,18 @@
   <title>Siberay | Etkinliklerimiz</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .event-card { display: flex; flex-direction: column; gap: 1rem; border-left: 4px solid var(--accent-cyan); padding: 1.5rem; margin-bottom: 1.5rem; }
+    .event-card { display: flex; flex-direction: column; gap: 1rem; border-left: 4px solid var(--accent-cyan); padding: 1.5rem; margin-bottom: 1.5rem; text-decoration: none; color: inherit; transition: all 0.3s ease; }
     @media (min-width: 768px) { .event-card { flex-direction: row; justify-content: space-between; align-items: center; } }
     .event-date { font-family: 'Share Tech Mono', monospace; color: var(--accent-cyan); font-size: 1.1rem; }
+    .event-card:hover { border-left-color: var(--accent-blue); transform: translateX(10px); background-color: rgba(10, 132, 255, 0.05); }
+    .loader { text-align: center; padding: 3rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace; }
   </style>
 </head>
 <body>
 
+  <div class="grid-glow"></div>
+
+  <!-- NAVBAR -->
   <nav class="navbar" style="position: relative; z-index: 20;">
     <a href="index.html" class="nav-brand">
       <img src="Image.png" alt="Siberay Logo" />
@@ -27,10 +32,9 @@
     <ul class="nav-links">
       <li><a href="index.html">Ana Sayfa</a></li>
       <li><a href="hakkimizda.html">Hakkımızda</a></li>
-      <li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li>
+      <li><a href="etkinliklerimiz.html" class="active">Etkinliklerimiz</a></li>
       <li><a href="gazete.html">Gazete</a></li>
     </ul>
-
     <div class="nav-socials">
       <a href="https://www.instagram.com/omusiberay/" target="_blank" title="Instagram">
         <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -49,22 +53,8 @@
         <div class="section-divider"></div>
       </div>
 
-      <div class="card animate event-card" style="border-left-color: var(--accent-blue);">
-        <div>
-          <span class="tag tag-blue" style="margin-bottom: 0.5rem;">Hackathon</span>
-          <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-primary); margin: 0.5rem 0;">OKAF 2026 Hackathon</h3>
-          <p style="color: var(--text-secondary); font-size: 0.95rem;">Bilgi Güvenliği Teknolojisi öğrencileri olarak yer aldığımız dev hackathon organizasyonu.</p>
-        </div>
-        <div class="event-date">Nisan 2026</div>
-      </div>
-
-      <div class="card animate event-card">
-        <div>
-          <span class="tag tag-cyan" style="margin-bottom: 0.5rem;">Zirve</span>
-          <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-primary); margin: 0.5rem 0;">1. Samsun Siber Güvenlik Zirvesi</h3>
-          <p style="color: var(--text-secondary); font-size: 0.95rem;">EGM Siberay işbirliği ile düzenlediğimiz, yüzlerce katılımcıyı ağırladığımız büyük zirvemiz.</p>
-        </div>
-        <div class="event-date">10 Şubat 2026</div>
+      <div id="etkinlik-listesi">
+        <div class="loader">Etkinlik logları sunucudan çekiliyor...</div>
       </div>
       
     </section>
@@ -78,6 +68,62 @@
     </div>
     <div class="footer-bottom"><p>© 2026 Siberay — OMÜ Siberay Topluluğu</p><p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p></div>
   </footer>
+
   <script src="scripts.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
+      authDomain: "siberay.firebaseapp.com",
+      projectId: "siberay",
+      storageBucket: "siberay.firebasestorage.app",
+      messagingSenderId: "953124646102",
+      appId: "1:953124646102:web:6757b08c2aeb652140ed77",
+      measurementId: "G-RGLC0Y937Q"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const etkinlikListesi = document.getElementById('etkinlik-listesi');
+
+    db.collection("haberler").orderBy("zamanDamgasi", "desc").get().then((querySnapshot) => {
+      etkinlikListesi.innerHTML = '';
+      let etkinlikVarMi = false;
+
+      querySnapshot.forEach((doc) => {
+        const haber = doc.data();
+        
+        // Sadece kategorisi "Etkinlik" olanları listele
+        if (haber.kategori !== "Etkinlik") return;
+        etkinlikVarMi = true;
+
+        const kartHTML = `
+          <a href="haber-detay.html?id=${doc.id}" class="card animate visible event-card">
+            <div>
+              <span class="tag tag-blue" style="margin-bottom: 0.5rem;">Zirve / Etkinlik</span>
+              <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-primary); margin: 0.5rem 0;">${haber.baslik}</h3>
+              <p style="color: var(--text-secondary); font-size: 0.95rem;">${haber.ozet}</p>
+            </div>
+            <div class="event-date">${haber.tarih}</div>
+          </a>
+        `;
+        etkinlikListesi.innerHTML += kartHTML;
+      });
+
+      if (!etkinlikVarMi) {
+        etkinlikListesi.innerHTML = `
+          <div class="card" style="text-align: center; padding: 4rem 2rem; border-style: dashed; border-color: var(--border); background: transparent;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📅</div>
+            <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Saha Operasyonları Hazırlanıyor</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Etkinliklerimiz çok yakında burada olacak.</p>
+          </div>`;
+      }
+    }).catch((error) => {
+      console.log("Hata:", error);
+      etkinlikListesi.innerHTML = "<div class='loader' style='color: red;'>Veritabanı bağlantı hatası!</div>";
+    });
+  </script>
 </body>
 </html>

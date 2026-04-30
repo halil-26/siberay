@@ -48,7 +48,7 @@
       <li><a href="index.html">Ana Sayfa</a></li>
       <li><a href="hakkimizda.html">Hakkımızda</a></li>
       <li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li>
-      <li><a href="gazete.html">Gazete</a></li>
+      <li><a href="gazete.html" class="active">Gazete</a></li>
     </ul>
 
     <div class="nav-socials">
@@ -107,30 +107,41 @@
     const haberListesi = document.getElementById('haber-listesi');
 
     db.collection("haberler").orderBy("zamanDamgasi", "desc").get().then((querySnapshot) => {
-      if (querySnapshot.empty) {
-        haberListesi.innerHTML = `
-          <div class="card" style="text-align: center; padding: 4rem 2rem; grid-column: 1 / -1; border-style: dashed; border-color: var(--border); background: transparent;">
-            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📰</div>
-            <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem;">İçerikler Hazırlanıyor</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Siber istihbarat bültenleri çok yakında burada olacak.</p>
-          </div>`;
-        return;
-      }
-
-      haberListesi.innerHTML = '';
+      let haberVarMi = false;
 
       querySnapshot.forEach((doc) => {
         const haber = doc.data();
+        
+        // EĞER KATEGORİ ETKİNLİK İSE, GAZETEDE GÖSTERME
+        if (haber.kategori === "Etkinlik") return;
+        
+        if (!haberVarMi) {
+            haberListesi.innerHTML = ''; // İlk haber bulunduğunda loader'ı temizle
+            haberVarMi = true;
+        }
+
+        // KATEGORİYE GÖRE OTOMATİK RENK SEÇİCİ
+        let rozetRengi = "tag-cyan"; // Varsayılan renk
+        if (haber.kategori === "Siber Güvenlik") rozetRengi = "tag-red";
+        else if (haber.kategori === "Yapay Zeka") rozetRengi = "tag-blue";
+        else if (haber.kategori === "Zararlı Yazılım") rozetRengi = "tag-orange";
+        else if (haber.kategori === "Genel Bilişim") rozetRengi = "tag-green";
+
         const kartHTML = `
-              <a href="haber-detay.html?id=${doc.id}" class="card blog-card animate visible">            <div class="blog-img-wrapper">
+          <a href="haber-detay.html?id=${doc.id}" class="card blog-card animate visible">            
+            <div class="blog-img-wrapper" style="position: relative;">
+              <!-- SOL ÜSTTEKİ DİNAMİK RENKLİ ROZET -->
+              <span class="tag ${rozetRengi}" style="position: absolute; top: 15px; left: 15px; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); backdrop-filter: blur(4px); font-size: 0.75rem;">
+                ${haber.kategori || 'Haber'}
+              </span>
+              
               <img src="${haber.gorsel}" alt="${haber.baslik}">
             </div>
             <div class="blog-content">
-              <span class="tag tag-cyan" style="width: fit-content; margin-bottom: 1rem;">Haber</span>
               <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">${haber.baslik}</h3>
               <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">${haber.ozet}</p>
               <div class="blog-meta">
-                <span>Ondokuz Mayıs Üniversitesi</span>
+                <span>OMÜ Siberay</span>
                 <span>📅 ${haber.tarih}</span>
               </div>
             </div>
@@ -138,6 +149,15 @@
         `;
         haberListesi.innerHTML += kartHTML;
       });
+
+      if (!haberVarMi) {
+        haberListesi.innerHTML = `
+          <div class="card" style="text-align: center; padding: 4rem 2rem; grid-column: 1 / -1; border-style: dashed; border-color: var(--border); background: transparent;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📰</div>
+            <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem;">İçerikler Hazırlanıyor</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Siber istihbarat bültenleri çok yakında burada olacak.</p>
+          </div>`;
+      }
     }).catch((error) => {
       console.log("Hata:", error);
       haberListesi.innerHTML = "<div class='loader' style='color: red;'>Veritabanı bağlantı hatası! Yetkileri kontrol edin.</div>";

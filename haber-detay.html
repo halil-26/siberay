@@ -3,32 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Siberay | Gazete</title>
+  <title>Siberay | Haber Detayı</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
-    .blog-card { padding: 0; display: flex; flex-direction: column; overflow: hidden; text-decoration: none; color: inherit; }
-    .blog-img-wrapper { 
-      height: 220px; 
-      width: 100%;
-      background-color: var(--bg-secondary);
-      border-bottom: 1px solid var(--border); 
-      overflow: hidden; 
+    .article-content { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
+    .article-content p { margin-bottom: 1.5rem; }
+    .article-content h3 { color: var(--text-primary); font-family: 'Rajdhani'; font-size: 1.6rem; margin: 2rem 0 1rem; }
+    .article-content strong { color: var(--accent-cyan); }
+    .loader { text-align: center; padding: 5rem; color: var(--accent-cyan); font-family: 'Share Tech Mono'; font-size: 1.2rem; }
+    .article-content img { 
+      max-width: 100%; 
+      max-height: 600px; 
+      height: auto; 
+      border-radius: 8px; 
+      display: block; 
+      margin: 2rem auto; 
+      object-fit: contain; 
     }
-    
-    .blog-img-wrapper img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: contain;
-      object-position: center; 
-      transition: transform 0.4s ease; 
-    }
-
-    .blog-card:hover .blog-img-wrapper img { transform: scale(1.05); }
-    .blog-content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
-    .blog-meta { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
-    
-    .loader { text-align: center; padding: 3rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace; grid-column: 1 / -1; }
   </style>
 </head>
 <body>
@@ -41,13 +32,10 @@
         <span class="nav-brand-sub">OMÜ Siberay Topluluğu</span>
       </div>
     </a>
-    <button class="hamburger" id="hamburger" aria-label="Menü">
-      <span></span><span></span><span></span>
-    </button>
     <ul class="nav-links">
       <li><a href="index.html">Ana Sayfa</a></li>
       <li><a href="hakkimizda.html">Hakkımızda</a></li>
-      <li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li>
+      <li><a href="etkinliklerimiz.html">Etkinlikler</a></li>
       <li><a href="gazete.html">Gazete</a></li>
     </ul>
 
@@ -62,36 +50,46 @@
   </nav>
 
   <main>
-    <section class="section">
-      <div class="section-header animate">
-        <span class="section-label">// siber istihbarat</span>
-        <h2 class="section-title">Siberay <span>Gazete</span></h2>
-        <div class="section-divider"></div>
-      </div>
-
-      <div class="blog-grid" id="haber-listesi">
-        <div class="loader">Veritabanına bağlanılıyor... Sistem logları çekiliyor...</div>
-      </div>
-
-    </section>
+    <article class="section" style="max-width: 800px; margin: 0 auto; padding-top: 3rem;" id="haber-konteyner">
+      <div class="loader">Veri merkezinden içerik çekiliyor...</div>
+    </article>
   </main>
 
   <footer style="position: relative; z-index: 20;">
     <div class="footer-inner">
-      <div class="footer-brand"><img src="Image.png" alt="Siberay" /><p>Ondokuz Mayıs Üniversitesi Siberay Topluluğu</p></div>
-      <div class="footer-col"><h4>Sayfalar</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li><li><a href="gazete.html">Gazete</a></li></ul></div>
-      <div class="footer-col"><h4>İletişim</h4><ul><li><a href="https://www.instagram.com/omusiberay/" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/company/omusiberay/" target="_blank">LinkedIn</a></li><li><a href="#">GitHub</a></li></ul></div>
+      <div class="footer-brand">
+        <img src="Image.png" alt="Siberay Logo" />
+        <p>Ondokuz Mayıs Üniversitesi Siberay Topluluğu</p>
+      </div>
+      <div class="footer-col">
+        <h4>Sayfalar</h4>
+        <ul>
+          <li><a href="index.html">Ana Sayfa</a></li>
+          <li><a href="hakkimizda.html">Hakkımızda</a></li>
+          <li><a href="etkinliklerimiz.html">Etkinlikler</a></li>
+          <li><a href="gazete.html">Gazete</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>İletişim</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/omusiberay/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/omusiberay/" target="_blank">LinkedIn</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-bottom"><p>© 2026 Siberay — OMÜ Siberay Topluluğu</p><p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p></div>
+    <div class="footer-bottom">
+      <p>© 2026 Siberay — OMÜ Siberay Topluluğu</p>
+      <p style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-muted)">// Tüm hakları saklıdır</p>
+    </div>
   </footer>
-
-  <script src="scripts.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    const firebaseConfig = {
+    const firebaseConfig = {    
       apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
       authDomain: "siberay.firebaseapp.com",
       projectId: "siberay",
@@ -100,57 +98,63 @@
       appId: "1:953124646102:web:6757b08c2aeb652140ed77",
       measurementId: "G-RGLC0Y937Q"
     };
-
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const haberListesi = document.getElementById('haber-listesi');
+    const urlParams = new URLSearchParams(window.location.search);
+    const haberId = urlParams.get('id');
+    const konteyner = document.getElementById('haber-konteyner');
 
-    db.collection("haberler").orderBy("zamanDamgasi", "desc").get().then((querySnapshot) => {
-      if (querySnapshot.empty) {
-        haberListesi.innerHTML = `
-          <div class="card" style="text-align: center; padding: 4rem 2rem; grid-column: 1 / -1; border-style: dashed; border-color: var(--border); background: transparent;">
-            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📰</div>
-            <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem;">İçerikler Hazırlanıyor</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Siber istihbarat bültenleri çok yakında burada olacak.</p>
-          </div>`;
-        return;
-      }
+    if (!haberId) {
+      konteyner.innerHTML = "<h2 style='color: red; text-align: center;'>İçerik bulunamadı veya link hatalı!</h2>";
+    } else {
+      db.collection("haberler").doc(haberId).get().then((doc) => {
+        if (doc.exists) {
+          const haber = doc.data();
+          
+          // --- YENİ EKLENEN KISIM: KATEGORİYE GÖRE RENK SEÇİMİ ---
+          let rozetRengi = "tag-cyan"; 
+          if (haber.kategori === "Siber Güvenlik") rozetRengi = "tag-red";
+          else if (haber.kategori === "Yapay Zeka") rozetRengi = "tag-blue";
+          else if (haber.kategori === "Zararlı Yazılım") rozetRengi = "tag-orange";
+          else if (haber.kategori === "Genel Bilişim") rozetRengi = "tag-green";
+          // -----------------------------------------------------
 
-      haberListesi.innerHTML = '';
-
-      querySnapshot.forEach((doc) => {
-        const haber = doc.data();
-        const kartHTML = `
-              <a href="haber-detay.html?id=${doc.id}" class="card blog-card animate visible">            <div class="blog-img-wrapper">
-              <img src="${haber.gorsel}" alt="${haber.baslik}">
+          const kapakGorseliHTML = haber.gorsel ? `
+            <div style="width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; background-color: var(--bg-secondary); text-align: center; border: 1px solid var(--border);">
+              <img src="${haber.gorsel}" alt="Kapak Görseli" style="max-width: 100%; max-height: 500px; height: auto; object-fit: contain;">
             </div>
-            <div class="blog-content">
-              <span class="tag tag-cyan" style="width: fit-content; margin-bottom: 1rem;">Haber</span>
-              <h3 style="font-family: 'Rajdhani'; font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-primary);">${haber.baslik}</h3>
-              <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">${haber.ozet}</p>
-              <div class="blog-meta">
-                <span>Ondokuz Mayıs Üniversitesi</span>
-                <span>📅 ${haber.tarih}</span>
-              </div>
+          ` : '';
+
+          konteyner.innerHTML = `
+            <div style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+              <!-- ROZET RENGİ ARTIK DİNAMİK OLARAK BURAYA EKLENİYOR -->
+              <span class="tag ${rozetRengi}">${haber.kategori || 'Siberay Bülten'}</span>
             </div>
-          </a>
-        `;
-        haberListesi.innerHTML += kartHTML;
+            
+            <h1 style="font-family: 'Rajdhani'; font-size: 2.5rem; color: var(--text-primary); margin-bottom: 1rem;">${haber.baslik}</h1>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+              <span><span style="color: var(--accent-cyan);">// TARİH:</span> ${haber.tarih || 'Bilinmiyor'}</span>
+              <span><span style="color: var(--accent-cyan);">// YAZAR:</span> ${haber.yazar || 'Siberay Ekibi'}</span>
+              ${haber.duzenleyen ? `<span><span style="color: var(--accent-cyan);">// EDİTÖR:</span> ${haber.duzenleyen}</span>` : ''}
+            </div>
+            
+            ${kapakGorseliHTML}
+            
+            <div class="article-content">
+              ${haber.icerik}
+            </div>
+          `;
+        } else {
+          konteyner.innerHTML = "<h2 style='color: red; text-align: center;'>Bu içerik silinmiş veya yayından kaldırılmış.</h2>";
+        }
+      }).catch((error) => {
+        console.log("Hata:", error);
+        konteyner.innerHTML = "<h2 style='color: red; text-align: center;'>Veritabanı bağlantı hatası!</h2>";
       });
-    }).catch((error) => {
-      console.log("Hata:", error);
-      haberListesi.innerHTML = "<div class='loader' style='color: red;'>Veritabanı bağlantı hatası! Yetkileri kontrol edin.</div>";
-    });
+    }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-  <script>
-    VanillaTilt.init(document.querySelectorAll(".card"), {
-      max: 5,        
-      speed: 400,    
-      glare: true,   
-      "max-glare": 0.1 
-    });
-  </script>
+  <script src="scripts.js"></script>
 </body>
 </html>

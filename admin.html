@@ -13,11 +13,9 @@
     .form-control { width: 100%; background: var(--bg-secondary); border: 1px solid var(--border); color: white; padding: 1rem; border-radius: 6px; font-family: 'Exo 2', sans-serif; }
     textarea.form-control { min-height: 250px; resize: vertical; }
     
-    /* Yan Yana Düzen için */
     .dashboard { display: none; grid-template-columns: 2fr 1fr; gap: 2rem; }
     @media (max-width: 768px) { .dashboard { grid-template-columns: 1fr; } }
     
-    /* Login Ekranı */
     #loginScreen { max-width: 400px; margin: 10vh auto; }
   </style>
 </head>
@@ -35,12 +33,30 @@
     
     <div class="admin-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-        <h2 style="color: var(--accent-cyan);">Haber Yayınla</h2>
+        <h2 style="color: var(--accent-cyan);">İçerik Yayınla</h2>
         <button onclick="cikisYap()" class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.8rem;">Çıkış Yap</button>
       </div>
 
       <form id="haberForm">
-        <div class="form-group"><label>HABER BAŞLIĞI</label><input type="text" id="baslik" class="form-control" required></div>
+        <div class="form-group" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+          <div>
+            <label>BAŞLIK</label>
+            <input type="text" id="baslik" class="form-control" required>
+          </div>
+          <div>
+            <label>KATEGORİ</label>
+            <select id="kategori" class="form-control" style="cursor: pointer; height: 100%;">
+              <!-- YENİ HABER KATEGORİLERİ -->
+              <option value="Siber Güvenlik">Siber Güvenlik (Haber)</option>
+              <option value="Yapay Zeka">Yapay Zeka (Haber)</option>
+              <option value="Zararlı Yazılım">Zararlı Yazılım (Haber)</option>
+              <option value="Genel Bilişim">Genel Bilişim (Haber)</option>
+              <!-- ETKİNLİKLER (Gazeteden gizlenip Etkinliklere gider) -->
+              <option value="Etkinlik" style="color: var(--accent-cyan);">Etkinlik / Proje (Etkinlik Sayfasına)</option>
+            </select>
+          </div>
+        </div>
+
         <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
           <div>
             <label>> YAYIN TARİHİ</label>
@@ -55,9 +71,15 @@
             <input type="text" id="duzenleyen" class="form-control" placeholder=" (Opsiyonel)">
           </div>
         </div>  
-        <div class="form-group"><label>KAPAK FOTOĞRAFI</label><input type="file" id="gorselDosyasi" class="form-control" accept="image/*" required></div>
+        
+        <!-- REQUIRED KALDIRILDI -->
+        <div class="form-group">
+          <label>KAPAK FOTOĞRAFI (Opsiyonel)</label>
+          <input type="file" id="gorselDosyasi" class="form-control" accept="image/*">
+        </div>
+        
         <div class="form-group"><label>KISA ÖZET</label><input type="text" id="ozet" class="form-control" required></div>
-        <div class="form-group"><label>HABER İÇERİĞİ</label><textarea id="icerik" class="form-control" required placeholder="<p>Paragraf</p>... İstediğin yere görsel kodunu yapıştır."></textarea></div>
+        <div class="form-group"><label>İÇERİK</label><textarea id="icerik" class="form-control" required placeholder="<p>Paragraf</p>... İstediğin yere görsel kodunu yapıştır."></textarea></div>
         <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">🚀 SİSTEME YÜKLE</button>
       </form>
       <div id="mesaj" style="color: #2ecc71; text-align: center; margin-top: 1rem; display: none;">Yüklendi!</div>
@@ -80,23 +102,21 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // FİREBASE ANAHTARLARIN
     const firebaseConfig = {
-  apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
-  authDomain: "siberay.firebaseapp.com",
-  projectId: "siberay",
-  storageBucket: "siberay.firebasestorage.app",
-  messagingSenderId: "953124646102",
-  appId: "1:953124646102:web:6757b08c2aeb652140ed77",
-  measurementId: "G-RGLC0Y937Q"
-};
+      apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
+      authDomain: "siberay.firebaseapp.com",
+      projectId: "siberay",
+      storageBucket: "siberay.firebasestorage.app",
+      messagingSenderId: "953124646102",
+      appId: "1:953124646102:web:6757b08c2aeb652140ed77",
+      measurementId: "G-RGLC0Y937Q"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
     const imgbbAPIKey = "d3340ef4bc18e5057941ef5fcb3e5f37";
 
-    // --- AUTHENTICATION (KİMLİK KONTROLÜ) ---
     auth.onAuthStateChanged(user => {
       if (user) {
         document.getElementById('loginScreen').style.display = 'none';
@@ -111,10 +131,8 @@
       const email = document.getElementById('loginEmail').value;
       const pass = document.getElementById('loginPass').value;
 
-      // Önce Firebase'e emir ver: "Oturumu sadece bu sekme açıkken koru (SESSION)"
       auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
         .then(() => {
-          // Ayar yapıldıktan sonra asıl girişi tetikle
           return auth.signInWithEmailAndPassword(email, pass);
         })
         .catch(error => {
@@ -124,7 +142,6 @@
 
     function cikisYap() { auth.signOut(); }
 
-    // --- ARA GÖRSEL (PARAGRAF İÇİ) YÜKLEYİCİ ---
     async function araGorselYukle() {
       const dosya = document.getElementById('araGorsel').files[0];
       if(!dosya) return alert("Önce resim seç!");
@@ -138,34 +155,40 @@
       try {
         const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`, { method: "POST", body: formData });
         const data = await res.json();
-        
-        // Şık bir resim kodu oluştur (tasarımı bozmaması için genişlik %100 ayarlandı)
         const htmlKodu = `<img src="${data.data.url}" alt="Haber Görseli">`;
         document.getElementById('araGorselKodu').value = htmlKodu;
       } catch(e) { alert("Hata!"); }
       btn.innerHTML = "Kodu Üret";
     }
 
-    // --- ANA HABER GÖNDERME FONKSİYONU ---
+    // HABER KAYDETME KISMI (RESİM YOKSA HATA VERMEZ)
     document.getElementById('haberForm').addEventListener('submit', async function(e) {
       e.preventDefault(); 
       const btn = document.getElementById('submitBtn');
       btn.innerHTML = "Yükleniyor...";
       
       try {
-        const formData = new FormData();
-        formData.append("image", document.getElementById('gorselDosyasi').files[0]);
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`, { method: "POST", body: formData });
-        const data = await res.json();
+        let gorselLink = "";
+        const kapakDosyasi = document.getElementById('gorselDosyasi').files[0];
+        
+        // Sadece dosya seçildiyse ImgBB'ye yükle
+        if (kapakDosyasi) {
+          const formData = new FormData();
+          formData.append("image", kapakDosyasi);
+          const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`, { method: "POST", body: formData });
+          const data = await res.json();
+          gorselLink = data.secure_url || data.data.url;
+        }
 
         await db.collection("haberler").add({
+          kategori: document.getElementById('kategori').value, 
           baslik: document.getElementById('baslik').value,
-          gorsel: data.secure_url || data.data.url, 
+          gorsel: gorselLink, // Resim yoksa boş kalır
           ozet: document.getElementById('ozet').value,
           icerik: document.getElementById('icerik').value,
-          tarih: document.getElementById('tarih').value, // Artık otomatik değil, senin yazdığın tarih
+          tarih: document.getElementById('tarih').value,
           yazar: document.getElementById('yazar').value,
-          duzenleyen: document.getElementById('duzenleyen').value || "", // Boş bırakılırsa hata vermesin
+          duzenleyen: document.getElementById('duzenleyen').value || "", 
           zamanDamgasi: firebase.firestore.FieldValue.serverTimestamp()
         });
 
