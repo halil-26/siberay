@@ -11,7 +11,7 @@
     .blog-img-wrapper { 
       height: 220px; 
       width: 100%;
-      background-color: var(--bg-secondary); /* Kartın rengiyle bütünleşsin */
+      background-color: var(--bg-secondary);
       border-bottom: 1px solid var(--border); 
       overflow: hidden; 
     }
@@ -19,7 +19,7 @@
     .blog-img-wrapper img { 
       width: 100%; 
       height: 100%; 
-      object-fit: contain; /* RESMİ ASLA KESME, TAMAMINI GÖSTER */
+      object-fit: contain;
       object-position: center; 
       transition: transform 0.4s ease; 
     }
@@ -28,13 +28,12 @@
     .blog-content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
     .blog-meta { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
     
-    /* Yükleniyor animasyonu */
     .loader { text-align: center; padding: 3rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace; grid-column: 1 / -1; }
   </style>
 </head>
 <body>
 
-  <nav class="navbar">
+  <nav class="navbar" style="position: relative; z-index: 20;">
     <a href="index.html" class="nav-brand">
       <img src="Image.png" alt="Siberay Logo" />
       <div class="nav-brand-text">
@@ -49,8 +48,17 @@
       <li><a href="index.html">Ana Sayfa</a></li>
       <li><a href="hakkimizda.html">Hakkımızda</a></li>
       <li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li>
-      <li><a href="gazete.html" class="active">Gazete</a></li>
+      <li><a href="gazete.html">Gazete</a></li>
     </ul>
+
+    <div class="nav-socials">
+      <a href="https://www.instagram.com/omusiberay/" target="_blank" title="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/omusiberay/" target="_blank" title="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+    </div>
   </nav>
 
   <main>
@@ -68,7 +76,7 @@
     </section>
   </main>
 
-  <footer>
+  <footer style="position: relative; z-index: 20;">
     <div class="footer-inner">
       <div class="footer-brand"><img src="Image.png" alt="Siberay" /><p>Ondokuz Mayıs Üniversitesi Siberay Topluluğu</p></div>
       <div class="footer-col"><h4>Sayfalar</h4><ul><li><a href="index.html">Ana Sayfa</a></li><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li><li><a href="gazete.html">Gazete</a></li></ul></div>
@@ -83,27 +91,22 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // 1. BURAYA KENDİ FİREBASE ANAHTARLARINI YAPIŞTIR
     const firebaseConfig = {
-  apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
-  authDomain: "siberay.firebaseapp.com",
-  projectId: "siberay",
-  storageBucket: "siberay.firebasestorage.app",
-  messagingSenderId: "953124646102",
-  appId: "1:953124646102:web:6757b08c2aeb652140ed77",
-  measurementId: "G-RGLC0Y937Q"
-};
+      apiKey: "AIzaSyDdny3t8-vF2x53XpPHwPkNSz2UfEUm0Zc",
+      authDomain: "siberay.firebaseapp.com",
+      projectId: "siberay",
+      storageBucket: "siberay.firebasestorage.app",
+      messagingSenderId: "953124646102",
+      appId: "1:953124646102:web:6757b08c2aeb652140ed77",
+      measurementId: "G-RGLC0Y937Q"
+    };
 
-    // Firebase'i Başlat
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
     const haberListesi = document.getElementById('haber-listesi');
 
-    // Veritabanından haberleri çek (En yeni en üstte olacak şekilde)
     db.collection("haberler").orderBy("zamanDamgasi", "desc").get().then((querySnapshot) => {
-      
-      // Eğer veritabanı boşsa
       if (querySnapshot.empty) {
         haberListesi.innerHTML = `
           <div class="card" style="text-align: center; padding: 4rem 2rem; grid-column: 1 / -1; border-style: dashed; border-color: var(--border); background: transparent;">
@@ -114,14 +117,10 @@
         return;
       }
 
-      // Veriler geldiyse loader'ı temizle
       haberListesi.innerHTML = '';
 
-      // Her bir haber için bir kart oluştur
       querySnapshot.forEach((doc) => {
         const haber = doc.data();
-        
-        // Kartın HTML kalıbı
         const kartHTML = `
               <a href="haber-detay.html?id=${doc.id}" class="card blog-card animate visible">            <div class="blog-img-wrapper">
               <img src="${haber.gorsel}" alt="${haber.baslik}">
@@ -137,8 +136,6 @@
             </div>
           </a>
         `;
-        
-        // Kartı listeye ekle
         haberListesi.innerHTML += kartHTML;
       });
     }).catch((error) => {
@@ -149,10 +146,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
     VanillaTilt.init(document.querySelectorAll(".card"), {
-      max: 5,        // Kartın maksimum dönme açısı
-      speed: 400,    // Dönüş hızı
-      glare: true,   // Üzerinden ışık yansıması (Efsane gösterir)
-      "max-glare": 0.1 // Işığın şiddeti
+      max: 5,        
+      speed: 400,    
+      glare: true,   
+      "max-glare": 0.1 
     });
   </script>
 </body>
