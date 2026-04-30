@@ -17,7 +17,7 @@
 
   <div class="grid-glow"></div>
 
-  <!-- NAVBAR -->
+
   <nav class="navbar" style="position: relative; z-index: 20;">
     <a href="index.html" class="nav-brand">
       <img src="Image.png" alt="Siberay Logo" />
@@ -95,7 +95,7 @@
       querySnapshot.forEach((doc) => {
         const haber = doc.data();
         
-        // Sadece kategorisi "Etkinlik" olanları listele
+
         if (haber.kategori !== "Etkinlik") return;
         etkinlikVarMi = true;
 

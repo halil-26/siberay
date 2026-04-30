@@ -112,16 +112,15 @@
       querySnapshot.forEach((doc) => {
         const haber = doc.data();
         
-        // EĞER KATEGORİ ETKİNLİK İSE, GAZETEDE GÖSTERME
+
         if (haber.kategori === "Etkinlik") return;
         
         if (!haberVarMi) {
-            haberListesi.innerHTML = ''; // İlk haber bulunduğunda loader'ı temizle
+            haberListesi.innerHTML = ''; 
             haberVarMi = true;
         }
 
-        // KATEGORİYE GÖRE OTOMATİK RENK SEÇİCİ
-        let rozetRengi = "tag-cyan"; // Varsayılan renk
+        let rozetRengi = "tag-cyan"; 
         if (haber.kategori === "Siber Güvenlik") rozetRengi = "tag-red";
         else if (haber.kategori === "Yapay Zeka") rozetRengi = "tag-blue";
         else if (haber.kategori === "Zararlı Yazılım") rozetRengi = "tag-orange";

@@ -32,7 +32,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── CYBER GRID BACKGROUND ─── */
 body::before {
   content: '';
   position: fixed;
@@ -45,7 +44,6 @@ body::before {
   z-index: 0;
 }
 
-/* ─── NAVBAR ─── */
 .navbar {
   position: fixed;
   top: 0;
@@ -103,6 +101,14 @@ body::before {
   align-items: center;
   gap: 0.25rem;
   list-style: none;
+}
+
+@media (min-width: 769px) {
+  .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .nav-links a {
@@ -163,14 +169,12 @@ body::before {
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ─── MAIN CONTENT ─── */
 main {
   position: relative;
   z-index: 1;
   padding-top: var(--nav-height);
 }
 
-/* ─── SECTION STYLES ─── */
 .section {
   padding: 6rem 2rem;
   max-width: 1200px;
@@ -245,7 +249,6 @@ main {
   opacity: 1;
 }
 
-/* ─── BUTTONS ─── */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -283,7 +286,6 @@ main {
   background: rgba(0, 212, 255, 0.08);
 }
 
-/* ─── FOOTER ─── */
 footer {
   position: relative;
   z-index: 1;
@@ -371,12 +373,10 @@ footer {
 .tag-green { background: rgba(39, 174, 96, 0.15); color: #2ecc71; border: 1px solid rgba(39, 174, 96, 0.3); }
 .tag-orange { background: rgba(230, 126, 34, 0.15); color: #f39c12; border: 1px solid rgba(230, 126, 34, 0.3); }
 
-/* ─── GLOW TEXT ─── */
 .glow {
   text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
-/* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
   .hamburger { display: flex; }
 
@@ -416,7 +416,6 @@ footer {
   .section { padding: 4rem 1.25rem; }
 }
 
-/* ─── SOSYAL MEDYA LOGOLARI (ANA SAYFA İÇİN) ─── */
 .social-icons {
   display: flex;
   justify-content: center;
@@ -439,7 +438,6 @@ footer {
   text-decoration: none;
 }
 
-/* ─── NAVBAR SOSYAL İKONLAR ─── */
 .nav-socials {
   display: flex;
   gap: 1.2rem;
@@ -459,8 +457,8 @@ footer {
 
 .nav-socials a:hover {
   color: var(--accent-cyan);
-  transform: translateY(-3px); /* Üzerine gelince hafif yukarı kalkar */
-  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.6)); /* Neon parlama */
+  transform: translateY(-3px);
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.6));
 }
 
 .nav-socials svg {
@@ -469,31 +467,28 @@ footer {
   fill: currentColor;
 }
 
-/* Telefon ekranlarında menüyü bozmamak için logoları gizliyoruz (Zaten mobilde footer'da var) */
 @media (max-width: 768px) {
   .nav-socials {
     display: none;
   }
 }
 
-/* ─── KARELERİ IŞILANDIRAN SPOT EFEKTİ ─── */
 .grid-glow {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  pointer-events: none; /* Farenin altındaki butonlara ve linklere tıklanabilmesini sağlar */
-  z-index: 0; /* Arka plandaki karelerin hemen üstünde, yazıların altında durur */
+  pointer-events: none;
+  z-index: 0;
   background: radial-gradient(
     500px circle at var(--mouse-x, 50vw) var(--mouse-y, 50vh),
-    rgba(0, 212, 255, 0.12), /* Siberay neon mavisinin hafif şeffaf hali */
+    rgba(0, 212, 255, 0.12),
     transparent 50%
   );
   transition: opacity 0.3s ease;
 }
 
-/* İçeriklerin ışığın altında kalıp soluklaşmaması için öne alıyoruz */
 .navbar, main, footer {
   position: relative;
   z-index: 10;
