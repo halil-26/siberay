@@ -6,15 +6,16 @@
   <title>Siberay | Ana Sayfa</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* ─── HERO (ANA EKRAN) KESİN VE SABİT ÇÖZÜM ─── */
     .hero {
-      min-height: 100vh; 
-      min-height: 100svh; 
+      height: 100vh; 
+      height: 100svh; /* Artık min-height değil, direkt height! Sayfa taşmaz. */
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      padding: var(--nav-height) 2rem 6rem 2rem; 
+      padding: 0 2rem; /* Çakışan boşlukları sildik */
     }
     .hero-bg-orb {
       position: absolute;
@@ -37,7 +38,7 @@
       position: relative;
       z-index: 10;
       max-width: 800px;
-      transform: translateY(-8vh); 
+      transform: translateY(-12vh); /* YAZILAR ÇOK DAHA YUKARI TAŞINDI */
     }
     
     .hero-title {
@@ -67,7 +68,7 @@
     
     .hero-scroll {
       position: absolute;
-      bottom: 12vh;
+      bottom: 5vh; /* OKLAR EKRANIN GÜVENLİ DİBİNE ÇEKİLDİ */
       left: 50%;
       transform: translateX(-50%);
       display: flex;
