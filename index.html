@@ -9,6 +9,7 @@
     
     .hero {
       min-height: 100vh;
+      min-height: 100dvh; /* Mobil tarayıcı çubuklarına karşı dinamik yükseklik */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -90,7 +91,7 @@
     }
     .hero-scroll {
       position: absolute;
-      bottom: 2rem;
+      bottom: 3.5rem; /* Çubuğun altında ezilmemesi için biraz daha yukarı alındı */
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -209,6 +210,11 @@
     @media (max-width: 768px) {
       .features-grid { grid-template-columns: 1fr; }
       .cta-box { padding: 2.5rem 1.5rem; }
+      
+      /* Mobilde ek bir güvenlik marjı */
+      .hero-scroll {
+        bottom: 5rem;
+      }
     }
   </style>
 </head>
@@ -271,8 +277,9 @@
         </div>
       </div>
 
+      <!-- SCROLL YERİNE KAYDIR YAZISI EKLENDİ -->
       <div class="hero-scroll">
-        <span>SCROLL</span>
+        <span>KAYDIR</span>
         <div class="hero-scroll-line"></div>
       </div>
     </section>
