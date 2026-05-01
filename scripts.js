@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Hamburger Menü ve Tam Ekran Mobil Deneyim ──
+  // ── Hamburger Menu ve Arkaplan Kilidi ──
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.querySelector('.nav-links');
   const body = document.body;
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.classList.toggle('open');
       navLinks.classList.toggle('open');
       
-      // Menü açıkken arkaplanı kaydırmayı kilitle (App hissiyatı)
       if (navLinks.classList.contains('open')) {
         body.style.overflow = 'hidden';
       } else {
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Menüdeki bir linke tıklandığında menüyü zarifçe kapat
+    // Mobilde linke tıklayınca menüyü kapat
     navLinks.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         hamburger.classList.remove('open');
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Aktif Sayfa İşaretleyicisi ──
+  // ── Active nav link ──
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(a => {
     const href = a.getAttribute('href');
@@ -36,27 +35,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ── Kaydırdıkça Gelen Siber Animasyonlar ──
+  // ── Animate on scroll ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
       }
     });
-  }, { threshold: 0.15 }); // %15'i göründüğünde tetikle (daha pürüzsüz)
+  }, { threshold: 0.15 });
 
   document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
-  // ── Daktilo Efekti (Typewriter) ──
-  const typewriterEls = document.querySelectorAll('[data-typewriter]');
-  typewriterEls.forEach(el => {
-    const text = el.getAttribute('data-typewriter');
-    let i = 0;
-    el.textContent = '';
-    const timer = setInterval(() => {
-      el.textContent += text[i];
-      i++;
-      if (i >= text.length) clearInterval(timer);
-    }, 60);
+  // ── SMOOTH PAGE TRANSITIONS (NATIVE APP HİSSİYATI) ──
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      const target = this.getAttribute('target');
+      
+      // Dış linkse, yeni sekme ise veya sayfa içi çapa (#) ise karışma
+      if (!href || href.startsWith('http') || href.startsWith('#') || target === '_blank') return;
+      
+      e.preventDefault(); // Sayfanın küt diye değişmesini engelle
+      
+      document.body.classList.add('fade-out'); // Çıkış animasyonunu (style.css'deki) başlat
+      
+      setTimeout(() => {
+        window.location.href = href; // Animasyon bitince (400ms) yeni sayfaya yönlendir
+      }, 400); 
+    });
   });
 });
