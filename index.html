@@ -6,16 +6,18 @@
   <title>Siberay | Ana Sayfa</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ─── HERO (ANA EKRAN) KESİN VE SABİT ÇÖZÜM ─── */
+    /* ─── HERO (ANA EKRAN) KUSURSUZ SABİTLEME ─── */
     .hero {
+      width: 100%;
       height: 100vh; 
-      height: 100svh; /* Artık min-height değil, direkt height! Sayfa taşmaz. */
+      height: 100svh; /* Mobil ekranların tam boyutuna kilitler */
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      padding: 0 2rem; /* Çakışan boşlukları sildik */
+      padding: 0 1.5rem; 
     }
     .hero-bg-orb {
       position: absolute;
@@ -25,20 +27,20 @@
     }
     .orb-1 {
       width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(10,132,255,0.12) 0%, transparent 70%);
-      top: 10%; left: -10%;
+      background: radial-gradient(circle, rgba(10,132,255,0.15) 0%, transparent 70%);
+      top: 5%; left: -10%;
     }
     .orb-2 {
       width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(192,57,43,0.08) 0%, transparent 70%);
-      bottom: 10%; right: -5%;
+      background: radial-gradient(circle, rgba(192,57,43,0.1) 0%, transparent 70%);
+      bottom: 5%; right: -5%;
     }
     .hero-content {
       text-align: center;
       position: relative;
       z-index: 10;
       max-width: 800px;
-      transform: translateY(-12vh); /* YAZILAR ÇOK DAHA YUKARI TAŞINDI */
+      margin-top: -5vh; /* Yazıları dengeli şekilde yukarı çektik */
     }
     
     .hero-title {
@@ -66,9 +68,10 @@
       flex-wrap: wrap;
     }
     
+    /* YENİ NESİL KAYDIR OKLARI */
     .hero-scroll {
       position: absolute;
-      bottom: 5vh; /* OKLAR EKRANIN GÜVENLİ DİBİNE ÇEKİLDİ */
+      bottom: 5vh; 
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -362,6 +365,42 @@
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   
   <script>
+    // 1. Sayfa kaymasını zorla engelleyen komut
+    window.onload = function() {
+      setTimeout(function() {
+        window.scrollTo(0, 0);
+      }, 50);
+    };
+
+    // 2. Siber ağ (Particles) komutu
+    if (document.getElementById('particles-js')) {
+      particlesJS('particles-js', {
+        "particles": {
+          "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+          "color": { "value": "#00d4ff" },
+          "shape": { "type": "circle" },
+          "opacity": { "value": 0.5, "random": false },
+          "size": { "value": 3, "random": true },
+          "line_linked": { "enable": true, "distance": 150, "color": "#0a84ff", "opacity": 0.4, "width": 1 },
+          "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "out_mode": "out" }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": { "enable": true, "mode": "grab" },
+            "onclick": { "enable": true, "mode": "push" },
+            "resize": true
+          },
+          "modes": {
+            "grab": { "distance": 150, "line_linked": { "opacity": 0.8 } },
+            "push": { "particles_nb": 4 }
+          }
+        },
+        "retina_detect": true
+      });
+    }
+
+    // 3. Masaüstü için kart animasyonu
     if (window.matchMedia("(pointer: fine)").matches) {
       VanillaTilt.init(document.querySelectorAll(".card"), {
         max: 5,        
@@ -371,11 +410,13 @@
       });
     }
 
+    // 4. Arka plan neon takibi
     document.addEventListener('mousemove', (e) => {
       document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
       document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
     });
 
+    // 5. Kaydırdıkça belirme efekti
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
