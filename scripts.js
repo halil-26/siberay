@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.classList.toggle('open');
       navLinks.classList.toggle('open');
       
+      // Menü açıkken sayfa kaymasını engelle
       if (navLinks.classList.contains('open')) {
         body.style.overflow = 'hidden';
       } else {
@@ -52,68 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const href = this.getAttribute('href');
       const target = this.getAttribute('target');
       
-      // Dış linkse, yeni sekme ise veya sayfa içi çapa (#) ise karışma
-      if (!href || href.startsWith('http') || href.startsWith('#') || target === '_blank') return;
+      // Dış linkse, yeni sekme ise veya sayfa içi çapa (#) ise veya onClick varsa karışma
+      if (!href || href.startsWith('http') || href.startsWith('#') || target === '_blank' || this.hasAttribute('onclick')) return;
       
-      e.preventDefault(); // Sayfanın küt diye değişmesini engelle
-      
-      document.body.classList.add('fade-out'); // Çıkış animasyonunu (style.css'deki) başlat
+      e.preventDefault(); 
+      document.body.classList.add('fade-out'); 
       
       setTimeout(() => {
-        window.location.href = href; // Animasyon bitince (400ms) yeni sayfaya yönlendir
+        window.location.href = href; 
       }, 400); 
-    });
-  });
-});
-// ── PARTICLES.JS (İNTERAKTİF SİBER AĞ ARKA PLANI) ──
-  if (document.getElementById('particles-js')) {
-    particlesJS('particles-js', {
-      "particles": {
-        "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
-        "color": { "value": "#00d4ff" }, // Neon mavi düğümler
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.4, "random": false },
-        "size": { "value": 3, "random": true },
-        "line_linked": { "enable": true, "distance": 150, "color": "#0a84ff", "opacity": 0.3, "width": 1 },
-        "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "out_mode": "out" }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": { "enable": true, "mode": "grab" }, // Fare/parmak yaklaştıkça ağlar toplanır
-          "onclick": { "enable": true, "mode": "push" }, // Tıklayınca yeni düğümler patlar
-          "resize": true
-        },
-        "modes": {
-          "grab": { "distance": 150, "line_linked": { "opacity": 0.8 } },
-          "push": { "particles_nb": 4 }
-        }
-      },
-      "retina_detect": true
-    });
-  }
-  document.addEventListener('DOMContentLoaded', () => {
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.querySelector('.nav-links');
-
-  // Hamburger Menü
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open');
-      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
-    });
-  }
-
-  // Smooth Sayfa Geçişi
-  document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      if (!href || href.startsWith('http') || href.startsWith('#')) return;
-      
-      e.preventDefault();
-      document.body.classList.add('fade-out');
-      setTimeout(() => { window.location.href = href; }, 400);
     });
   });
 });
