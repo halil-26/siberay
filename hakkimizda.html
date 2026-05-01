@@ -189,12 +189,14 @@
   <script src="scripts.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
-    VanillaTilt.init(document.querySelectorAll(".card"), {
-      max: 5,        
-      speed: 400,    
-      glare: true,   
-      "max-glare": 0.1 
-    });
+    if (window.matchMedia("(pointer: fine)").matches) {
+      VanillaTilt.init(document.querySelectorAll(".card"), {
+        max: 5,        
+        speed: 400,    
+        glare: true,   
+        "max-glare": 0.1 
+      });
+    }
   </script>
 </body>
 </html>
