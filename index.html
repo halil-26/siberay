@@ -8,14 +8,13 @@
   <style>
     /* ─── HERO (ANA EKRAN) KESİN ÇÖZÜM ─── */
     .hero {
-      min-height: 100vh; /* Eski telefonlar için yedek */
-      min-height: 100svh; /* Zıplamayı engelleyen altın vuruş! */
+      min-height: 100vh; 
+      min-height: 100svh; /* Zıplamayı engelleyen altın vuruş */
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      /* Üstten menü kadar, alttan KAYDIR yazısı kadar güvenli boşluk */
       padding: var(--nav-height) 2rem 6rem 2rem; 
     }
     .hero-bg-orb {
@@ -39,35 +38,11 @@
       position: relative;
       z-index: 10;
       max-width: 800px;
-      /* Dengesiz translateY silindi, artık kusursuz ortada */
+      /* YAZILAR DAHA DA YUKARI ÇEKİLDİ */
+      transform: translateY(-8vh); 
     }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent-cyan);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      border: 1px solid rgba(0,212,255,0.25);
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      margin-bottom: 2rem;
-      background: rgba(0,212,255,0.05);
-    }
-    .hero-badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--accent-cyan);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent-cyan);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    
+    /* YANIP SÖNEN ROZET SİLİNDİ, SADECE BAŞLIK KALDI */
     .hero-title {
       font-family: 'Rajdhani', sans-serif;
       font-size: clamp(3rem, 10vw, 6.5rem);
@@ -78,6 +53,7 @@
       letter-spacing: -1px;
     }
     .hero-title .accent { color: var(--accent-cyan); }
+    
     .hero-desc {
       font-size: 1.05rem;
       color: var(--text-secondary);
@@ -92,10 +68,10 @@
       flex-wrap: wrap;
     }
     
-    /* KAYDIR EFEKTİ DÜZELTİLDİ: Artık butonları ezmeyecek */
+    /* KAYDIR EFEKTİ GÖRÜNÜR YERE SABİTLENDİ */
     .hero-scroll {
       position: absolute;
-      bottom: 2rem; 
+      bottom: 3rem; 
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -254,12 +230,9 @@
       <div class="hero-bg-orb orb-2"></div>
 
       <div class="hero-content">
-        <div class="hero-badge">
-          <span>OMÜ Siberay Topluluğu</span>
-        </div>
         <h1 class="hero-title">
           SİBER<span class="accent">AY</span><br/>
-          <span style="font-size: 0.45em; letter-spacing: 6px; font-weight: 400; color: var(--text-secondary)">TOPLULUĞU</span>
+          <span style="font-size: 0.45em; letter-spacing: 8px; font-weight: 400; color: var(--text-secondary); display: block; margin-top: 0.5rem;">TOPLULUĞU</span>
         </h1>
         <p class="hero-desc">
           Ondokuz Mayıs Üniversitesi'nin siber güvenlik alanında öncü öğrenci topluluğu.
@@ -331,7 +304,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <img src="Image.png" alt="Siberay" />
-        <p>Ondokuz Mayıs Üniversitesi Siberay Topluluğu</p>
+        <p>Ondokuz Mayıs Üniversitesi<br>Siberay Topluluğu</p>
       </div>
       <div class="footer-col">
         <h4>Sayfalar</h4>
