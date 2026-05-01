@@ -181,14 +181,13 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); ba
   transition: opacity 0.3s ease;
 }
 
-/* ─── MOBİL APP DENEYİMİ (WOW FAKTÖRÜ) ─── */
+/* ─── MOBİL APP DENEYİMİ ─── */
 @media (max-width: 768px) {
   .hamburger { display: flex; }
   .nav-socials { display: none; }
   
   .navbar { padding: 0 1rem; }
   
-  /* Logolar sıkışmasın diye bir tık küçültüldü */
   .nav-brand-title { font-size: 1.1rem; }
   .nav-brand-sub { font-size: 0.55rem; }
 
@@ -206,16 +205,17 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); ba
     justify-content: center;
     padding: 2rem;
     gap: 1.5rem;
-    /* Agresif -100% yerine, hafif yukarıdan yumuşakça belirme efekti */
-    transform: translateY(-30px);
+    
+    /* Agresif kayma yerine hafif küçültme ve yumuşak süzülme (iOS Tarzı) */
+    transform: translateY(-20px) scale(0.98); 
     opacity: 0;
     visibility: hidden;
-    transition: transform 0.4s ease-out, opacity 0.4s ease-out, visibility 0.4s ease-out;
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1); 
     z-index: 999;
   }
 
   .nav-links.open {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
     visibility: visible;
   }
