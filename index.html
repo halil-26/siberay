@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     
+    /* ─── HERO (ANA EKRAN) DÜZELTMELERİ ─── */
     .hero {
-      min-height: 100vh;
-      min-height: 100dvh; /* Mobil tarayıcı çubuklarına karşı dinamik yükseklik */
+      /* Navbar boyunu hesaptan düşüyoruz ki ekran gereksiz kaymasın */
+      height: calc(100dvh - var(--nav-height));
+      min-height: 500px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -38,6 +40,7 @@
       position: relative;
       z-index: 10;
       max-width: 800px;
+      transform: translateY(-5vh); /* Yazıları ekranın tam ortasından bir tık yukarı aldık */
     }
     .hero-badge {
       display: inline-flex;
@@ -89,9 +92,11 @@
       justify-content: center;
       flex-wrap: wrap;
     }
+    
+    /* KAYDIR EFEKTİ TAM AŞAĞIYA SABİTLENDİ */
     .hero-scroll {
       position: absolute;
-      bottom: 3.5rem; /* Çubuğun altında ezilmemesi için biraz daha yukarı alındı */
+      bottom: 2rem; 
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -210,11 +215,6 @@
     @media (max-width: 768px) {
       .features-grid { grid-template-columns: 1fr; }
       .cta-box { padding: 2.5rem 1.5rem; }
-      
-      /* Mobilde ek bir güvenlik marjı */
-      .hero-scroll {
-        bottom: 5rem;
-      }
     }
   </style>
 </head>
@@ -277,7 +277,6 @@
         </div>
       </div>
 
-      <!-- SCROLL YERİNE KAYDIR YAZISI EKLENDİ -->
       <div class="hero-scroll">
         <span>KAYDIR</span>
         <div class="hero-scroll-line"></div>

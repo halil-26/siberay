@@ -42,7 +42,7 @@ body::before {
   z-index: 0;
 }
 
-/* ─── SİBER KAYDIRMA VE METİN SEÇİMİ (WOW FAKTÖRÜ) ─── */
+/* ─── SİBER KAYDIRMA VE METİN SEÇİMİ ─── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.3); border-radius: 10px; }
@@ -186,25 +186,31 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); ba
   .hamburger { display: flex; }
   .nav-socials { display: none; }
   
-  .navbar { padding: 0 1.25rem; }
+  .navbar { padding: 0 1rem; }
+  
+  /* Logolar sıkışmasın diye bir tık küçültüldü */
+  .nav-brand-title { font-size: 1.1rem; }
+  .nav-brand-sub { font-size: 0.55rem; }
+
   .section { padding: 4rem 1.25rem; }
 
-  /* TAM EKRAN NEON MOBİL MENÜ */
+  /* TAM EKRAN NEON MOBİL MENÜ - DAHA SMOOTH AÇILIŞ */
   .nav-links {
     position: fixed;
     top: 0; left: 0; right: 0;
-    height: 100vh;
-    background: rgba(7, 13, 20, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    height: 100dvh;
+    background: rgba(7, 13, 20, 0.96);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     flex-direction: column;
     justify-content: center;
     padding: 2rem;
     gap: 1.5rem;
-    transform: translateY(-100%); /* Yukarıdan aşağı kayar */
+    /* Agresif -100% yerine, hafif yukarıdan yumuşakça belirme efekti */
+    transform: translateY(-30px);
     opacity: 0;
     visibility: hidden;
-    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.4s ease, visibility 0.5s;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out, visibility 0.4s ease-out;
     z-index: 999;
   }
 
@@ -214,7 +220,6 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); ba
     visibility: visible;
   }
 
-  /* LİNKLER İÇİN MOBİL BUTON TASARIMI VE SIRALI ANİMASYON */
   .nav-links li {
     width: 100%;
     opacity: 0;
@@ -232,7 +237,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); ba
     display: block;
     width: 100%;
     text-align: center;
-    font-size: 1.5rem; /* Mobilde devasa ve okunabilir */
+    font-size: 1.5rem; 
     padding: 1.2rem;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.02);
@@ -245,9 +250,8 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); ba
     box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
   }
 
-  .nav-links a::after { display: none; } /* Mobilde alt çizgiye gerek yok */
+  .nav-links a::after { display: none; }
 
-  /* KARTLARA SİBER NEFES ALMA EFEKTİ (Mobilde fare olmadığı için) */
   .card {
     animation: mobileBreathing 4s infinite alternate ease-in-out;
   }
