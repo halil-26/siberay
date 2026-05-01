@@ -53,13 +53,52 @@
       letter-spacing: -1px;
     }
     .hero-title .accent { color: var(--accent-cyan); }
-    
+
+    /* ─── AY HİLAL ANİMASYONU ─── */
+    .title-ay-wrap {
+      display: inline-block;
+      position: relative;
+      color: var(--accent-cyan);
+      vertical-align: baseline;
+    }
+    .title-ay-text {
+      display: inline-block;
+      transition: opacity 0.3s ease;
+    }
+    .moon-canvas-wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      line-height: 0;
+      overflow: visible;
+    }
+    .title-ay-wrap.moon-active .title-ay-text {
+      opacity: 0;
+    }
+    .title-ay-wrap.moon-active .moon-canvas-wrap {
+      opacity: 1;
+    }
+
+    /* ─── GLİTCH / CYBER DECODE EFEKT ─── */
     .hero-desc {
       font-size: 1.05rem;
       color: var(--text-secondary);
       line-height: 1.7;
       max-width: 550px;
       margin: 0 auto 2.5rem;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    .hero-desc .decode-char {
+      display: inline;
+      transition: color 0.1s;
+    }
+    .hero-desc .decode-char.glitching {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 8px rgba(0,212,255,0.7);
     }
     .hero-cta {
       display: flex;
@@ -256,10 +295,13 @@
 
       <div class="hero-content">
         <h1 class="hero-title">
-          SİBER<span class="accent">AY</span><br/>
+          SİBER<span class="title-ay-wrap" id="ayWrap">
+            <span class="title-ay-text accent">AY</span>
+            <span class="moon-canvas-wrap"><svg id="moonSVG" xmlns="http://www.w3.org/2000/svg" overflow="visible"></svg></span>
+          </span><br/>
           <span style="font-size: 0.45em; letter-spacing: 8px; font-weight: 400; color: var(--text-secondary); display: block; margin-top: 0.5rem;">TOPLULUĞU</span>
         </h1>
-        <p class="hero-desc">
+        <p class="hero-desc" id="heroDesc">
           Ondokuz Mayıs Üniversitesi'nin siber güvenlik alanında öncü öğrenci topluluğu.
           Birlikte öğreniyor, keşfediyor ve güvenli bir dijital gelecek inşa ediyoruz.
         </p>
@@ -410,7 +452,349 @@
       });
     }
 
-    // 4. Arka plan neon takibi
+    // ─── AY → HİLAL ANİMASYONU (SVG) ───
+    (function() {
+      const ayWrap = document.getElementById('ayWrap');
+      const ayText = ayWrap ? ayWrap.querySelector('.title-ay-text') : null;
+      const svg    = document.getElementById('moonSVG');
+      if (!ayWrap || !svg || !ayText) return;
+
+      const NS = 'http://www.w3.org/2000/svg';
+      let animFrame = null;
+      let progress  = 0;
+      let built     = false;
+
+      // ── SVG yapısını bir kez oluştur ──
+      function buildSVG(w, h) {
+        svg.setAttribute('width',  w);
+        svg.setAttribute('height', h);
+        svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+        svg.innerHTML = '';
+
+        const cx = w / 2, cy = h / 2;
+        // Yarıçap: yüksekliğin %44'ü — dolgun, iddialı hilal
+        const r  = Math.min(w, h) * 0.44;
+
+        // Gölge dairesi kaydırması: r * 0.62 → güzel kalınlıkta hilal
+        const sX = cx + r * 0.62;
+        const sY = cy - r * 0.07;
+        const sR = r * 0.96;
+
+        // Hilal path'ini hesapla (iki dairenin kesişimi)
+        // Sol daire: merkez cx,cy yarıçap r
+        // Sağ daire (gölge): merkez sX,sY yarıçap sR
+        // Path: sol dairenin görünen yayı + sağ dairenin iç yayı
+        function crescentPath() {
+          // Sol dairenin üst ve alt kesişim noktaları ile sağ daire
+          // Basit yaklaşım: clip-path yerine path2D ile birleşik alan
+          // Daha güvenilir: rect üzerinde clip kullan
+          return null; // SVG clipPath yaklaşımı kullanacağız
+        }
+
+        // ── Defs: gradient + filter + clipPath ──
+        const defs = document.createElementNS(NS, 'defs');
+
+        // Radial gradient — sıcak sarı/altın
+        const radGrd = document.createElementNS(NS, 'radialGradient');
+        radGrd.setAttribute('id', 'moonGrd');
+        radGrd.setAttribute('cx', '38%');
+        radGrd.setAttribute('cy', '35%');
+        radGrd.setAttribute('r',  '65%');
+        const stops = [
+          ['0%',   '#fff8c0', '1'],
+          ['30%',  '#fdd835', '1'],
+          ['62%',  '#e6a500', '1'],
+          ['85%',  '#b87200', '1'],
+          ['100%', '#7a4a00', '1'],
+        ];
+        stops.forEach(([offset, color, opacity]) => {
+          const s = document.createElementNS(NS, 'stop');
+          s.setAttribute('offset', offset);
+          s.setAttribute('stop-color', color);
+          s.setAttribute('stop-opacity', opacity);
+          radGrd.appendChild(s);
+        });
+        defs.appendChild(radGrd);
+
+        // Kenar parlaklığı için radial gradient (hilal iç kenarı)
+        const rimGrd = document.createElementNS(NS, 'radialGradient');
+        rimGrd.setAttribute('id', 'rimGrd');
+        rimGrd.setAttribute('cx', '28%');
+        rimGrd.setAttribute('cy', '50%');
+        rimGrd.setAttribute('r',  '55%');
+        const rimStops = [
+          ['0%',  '#fffde0', '1'],
+          ['40%', '#fde040', '0.6'],
+          ['100%','#e69500', '0'],
+        ];
+        rimStops.forEach(([offset, color, opacity]) => {
+          const s = document.createElementNS(NS, 'stop');
+          s.setAttribute('offset', offset);
+          s.setAttribute('stop-color', color);
+          s.setAttribute('stop-opacity', opacity);
+          rimGrd.appendChild(s);
+        });
+        defs.appendChild(rimGrd);
+
+        // Glow filtresi — Gaussian blur, hilal şeklini takip eder
+        const fltOuter = document.createElementNS(NS, 'filter');
+        fltOuter.setAttribute('id', 'glowOuter');
+        fltOuter.setAttribute('x', '-80%');
+        fltOuter.setAttribute('y', '-80%');
+        fltOuter.setAttribute('width', '260%');
+        fltOuter.setAttribute('height', '260%');
+        fltOuter.setAttribute('color-interpolation-filters', 'sRGB');
+        const feGaussOuter = document.createElementNS(NS, 'feGaussianBlur');
+        feGaussOuter.setAttribute('in', 'SourceGraphic');
+        feGaussOuter.setAttribute('stdDeviation', String(r * 0.28));
+        fltOuter.appendChild(feGaussOuter);
+        defs.appendChild(fltOuter);
+
+        // İnce kenar glow — daha az blur
+        const fltRim = document.createElementNS(NS, 'filter');
+        fltRim.setAttribute('id', 'glowRim');
+        fltRim.setAttribute('x', '-40%');
+        fltRim.setAttribute('y', '-40%');
+        fltRim.setAttribute('width', '180%');
+        fltRim.setAttribute('height', '180%');
+        fltRim.setAttribute('color-interpolation-filters', 'sRGB');
+        const feGaussRim = document.createElementNS(NS, 'feGaussianBlur');
+        feGaussRim.setAttribute('in', 'SourceGraphic');
+        feGaussRim.setAttribute('stdDeviation', String(r * 0.10));
+        fltRim.appendChild(feGaussRim);
+        defs.appendChild(fltRim);
+
+        // ClipPath: hilal şekli (ana daire - gölge daire)
+        const clip = document.createElementNS(NS, 'clipPath');
+        clip.setAttribute('id', 'crescentClip');
+        // Ana daire
+        const clipCircle = document.createElementNS(NS, 'circle');
+        clipCircle.setAttribute('cx', cx);
+        clipCircle.setAttribute('cy', cy);
+        clipCircle.setAttribute('r',  r);
+        clip.appendChild(clipCircle);
+        defs.appendChild(clip);
+
+        // Mask: gölge daireyi çıkarmak için
+        const mask = document.createElementNS(NS, 'mask');
+        mask.setAttribute('id', 'crescentMask');
+        const maskRect = document.createElementNS(NS, 'rect');
+        maskRect.setAttribute('x', 0); maskRect.setAttribute('y', 0);
+        maskRect.setAttribute('width', w); maskRect.setAttribute('height', h);
+        maskRect.setAttribute('fill', 'white');
+        const maskShadow = document.createElementNS(NS, 'circle');
+        maskShadow.setAttribute('cx', sX);
+        maskShadow.setAttribute('cy', sY);
+        maskShadow.setAttribute('r',  sR);
+        maskShadow.setAttribute('fill', 'black');
+        mask.appendChild(maskRect);
+        mask.appendChild(maskShadow);
+        defs.appendChild(mask);
+
+        svg.appendChild(defs);
+
+        // ── Katman 1: Dış glow (blur'lu hilal kopyası, sarı) ──
+        const glowGroup = document.createElementNS(NS, 'g');
+        glowGroup.setAttribute('id', 'glowLayer');
+        glowGroup.setAttribute('filter', 'url(#glowOuter)');
+        glowGroup.setAttribute('opacity', '0');
+        const glowCircle = document.createElementNS(NS, 'circle');
+        glowCircle.setAttribute('cx', cx);
+        glowCircle.setAttribute('cy', cy);
+        glowCircle.setAttribute('r',  r);
+        glowCircle.setAttribute('fill', '#ffc200');
+        glowCircle.setAttribute('mask', 'url(#crescentMask)');
+        glowGroup.appendChild(glowCircle);
+        svg.appendChild(glowGroup);
+
+        // ── Katman 2: Orta glow (daha az blur) ──
+        const rimGlowGroup = document.createElementNS(NS, 'g');
+        rimGlowGroup.setAttribute('id', 'rimGlowLayer');
+        rimGlowGroup.setAttribute('filter', 'url(#glowRim)');
+        rimGlowGroup.setAttribute('opacity', '0');
+        const rimGlowCircle = document.createElementNS(NS, 'circle');
+        rimGlowCircle.setAttribute('cx', cx);
+        rimGlowCircle.setAttribute('cy', cy);
+        rimGlowCircle.setAttribute('r',  r);
+        rimGlowCircle.setAttribute('fill', '#ffe566');
+        rimGlowCircle.setAttribute('mask', 'url(#crescentMask)');
+        rimGlowGroup.appendChild(rimGlowCircle);
+        svg.appendChild(rimGlowGroup);
+
+        // ── Katman 3: Hilal kendisi (gradient dolgulu) ──
+        const moonGroup = document.createElementNS(NS, 'g');
+        moonGroup.setAttribute('id', 'moonLayer');
+        moonGroup.setAttribute('opacity', '0');
+        const moonCircle = document.createElementNS(NS, 'circle');
+        moonCircle.setAttribute('cx', cx);
+        moonCircle.setAttribute('cy', cy);
+        moonCircle.setAttribute('r',  r);
+        moonCircle.setAttribute('fill', 'url(#moonGrd)');
+        moonCircle.setAttribute('mask', 'url(#crescentMask)');
+        moonGroup.appendChild(moonCircle);
+        // İnce iç yüzey parıltısı
+        const shineCircle = document.createElementNS(NS, 'circle');
+        shineCircle.setAttribute('cx', cx);
+        shineCircle.setAttribute('cy', cy);
+        shineCircle.setAttribute('r',  r);
+        shineCircle.setAttribute('fill', 'url(#rimGrd)');
+        shineCircle.setAttribute('mask', 'url(#crescentMask)');
+        shineCircle.setAttribute('opacity', '0.5');
+        moonGroup.appendChild(shineCircle);
+        svg.appendChild(moonGroup);
+
+        built = true;
+      }
+
+      function setSVGSize() {
+        const rect = ayText.getBoundingClientRect();
+        const w = Math.round(rect.width);
+        const h = Math.round(rect.height);
+        svg.setAttribute('width',  w);
+        svg.setAttribute('height', h);
+        svg.style.width  = w + 'px';
+        svg.style.height = h + 'px';
+        if (!built) buildSVG(w, h);
+      }
+
+      function applyProgress(prog) {
+        const glowLayer    = document.getElementById('glowLayer');
+        const rimGlowLayer = document.getElementById('rimGlowLayer');
+        const moonLayer    = document.getElementById('moonLayer');
+        if (!glowLayer || !moonLayer) return;
+        // Glow önce gelir ve daha fazla yanar
+        glowLayer.setAttribute('opacity',    String(Math.min(prog * 1.1, 1) * 0.75));
+        rimGlowLayer.setAttribute('opacity', String(Math.min(prog * 1.2, 1) * 0.90));
+        moonLayer.setAttribute('opacity',    String(prog));
+      }
+
+      function animateIn() {
+        progress += 0.038;
+        if (progress >= 1) { progress = 1; applyProgress(1); return; }
+        applyProgress(progress);
+        animFrame = requestAnimationFrame(animateIn);
+      }
+
+      function animateOut() {
+        progress -= 0.048;
+        if (progress <= 0) {
+          progress = 0;
+          applyProgress(0);
+          ayWrap.classList.remove('moon-active');
+          return;
+        }
+        applyProgress(progress);
+        animFrame = requestAnimationFrame(animateOut);
+      }
+
+      function startMoon() {
+        if (animFrame) cancelAnimationFrame(animFrame);
+        if (!built) {
+          const rect = ayText.getBoundingClientRect();
+          buildSVG(Math.round(rect.width), Math.round(rect.height));
+        }
+        progress = 0;
+        ayWrap.classList.add('moon-active');
+        animateIn();
+      }
+
+      function endMoon() {
+        if (animFrame) cancelAnimationFrame(animFrame);
+        animateOut();
+      }
+
+      function moonCycle() {
+        startMoon();
+        setTimeout(() => { endMoon(); setTimeout(moonCycle, 2200); }, 3800);
+      }
+
+      setTimeout(() => { setSVGSize(); setTimeout(moonCycle, 500); }, 1800);
+      window.addEventListener('resize', () => { built = false; setSVGSize(); });
+    })();
+
+
+
+    // ─── CYBER DECODE / GLİTCH METİN EFEKTİ ───
+    (function() {
+      const el = document.getElementById('heroDesc');
+      if (!el) return;
+
+      const originalText = el.innerText;
+      const CYBER_CHARS = '01アイウエオ#$%&*<>[]{}|~^░▒▓█';
+
+      function randomChar() {
+        return CYBER_CHARS[Math.floor(Math.random() * CYBER_CHARS.length)];
+      }
+
+      function buildSpans(text) {
+        el.innerHTML = '';
+        const spans = [];
+        for (let i = 0; i < text.length; i++) {
+          const s = document.createElement('span');
+          s.className = 'decode-char';
+          s.textContent = text[i];
+          el.appendChild(s);
+          spans.push(s);
+        }
+        return spans;
+      }
+
+      function runDecode(spans, chars) {
+        let revealed = 0;
+        const total = chars.length;
+
+        // Önce tüm harfleri glitch karakterlerine çevir
+        spans.forEach((s, i) => {
+          if (chars[i] === ' ' || chars[i] === '\n') {
+            s.textContent = chars[i];
+            return;
+          }
+          s.textContent = randomChar();
+          s.classList.add('glitching');
+        });
+
+        const revealInterval = setInterval(() => {
+          // Her tick'te birkaç karakteri çöz
+          let toReveal = Math.ceil((total - revealed) * 0.08) + 1;
+          for (let t = 0; t < toReveal && revealed < total; t++) {
+            // Soldan sağa sıralı reveal
+            const idx = revealed;
+            revealed++;
+            if (chars[idx] === ' ' || chars[idx] === '\n') continue;
+            spans[idx].textContent = chars[idx];
+            spans[idx].classList.remove('glitching');
+          }
+
+          // Henüz reveal edilmemiş olanları sürekli değiştir
+          for (let i = revealed; i < total; i++) {
+            if (chars[i] === ' ' || chars[i] === '\n') continue;
+            if (Math.random() < 0.4) {
+              spans[i].textContent = randomChar();
+            }
+          }
+
+          if (revealed >= total) {
+            clearInterval(revealInterval);
+            // Hepsini düzelt
+            spans.forEach((s, i) => {
+              s.textContent = chars[i];
+              s.classList.remove('glitching');
+            });
+          }
+        }, 40);
+      }
+
+      function startGlitch() {
+        const spans = buildSpans(originalText);
+        runDecode(spans, originalText.split(''));
+      }
+
+      // Sayfa yüklenince 1.5sn sonra ve ardından her 8 saniyede
+      setTimeout(() => {
+        startGlitch();
+        setInterval(startGlitch, 8000);
+      }, 1500);
+    })();
     document.addEventListener('mousemove', (e) => {
       document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
       document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
