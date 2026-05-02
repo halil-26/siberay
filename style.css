@@ -323,11 +323,13 @@ footer { position: relative; z-index: 10; border-top: 1px solid var(--border); b
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  opacity: 0;
 }
 
 .cyber-modal.show {
   display: flex;
-  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .cyber-modal-content {
@@ -342,6 +344,7 @@ footer { position: relative; z-index: 10; border-top: 1px solid var(--border); b
   text-align: left;
   transform: scale(0.95);
   animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-fill-mode: forwards;
 }
 
 .close-modal {
@@ -419,6 +422,7 @@ footer { position: relative; z-index: 10; border-top: 1px solid var(--border); b
   .nav-links.open li:nth-child(2) { transition-delay: 0.2s; }
   .nav-links.open li:nth-child(3) { transition-delay: 0.3s; }
   .nav-links.open li:nth-child(4) { transition-delay: 0.4s; }
+  .nav-links.open li:nth-child(5) { transition-delay: 0.5s; }
 
   .nav-links a {
     display: block;
