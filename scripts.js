@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Hamburger Menu ve Arkaplan Kilidi ──
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.querySelector('.nav-links');
   const body = document.body;
@@ -8,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('open');
       navLinks.classList.toggle('open');
-      
-      // Menü açıkken sayfa kaymasını engelle
       if (navLinks.classList.contains('open')) {
         body.style.overflow = 'hidden';
       } else {
@@ -17,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Mobilde linke tıklayınca menüyü kapat
     navLinks.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         hamburger.classList.remove('open');
@@ -27,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Active nav link ──
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(a => {
     const href = a.getAttribute('href');
@@ -36,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ── Animate on scroll ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -47,21 +41,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
-  // ── SMOOTH PAGE TRANSITIONS (NATIVE APP HİSSİYATI) ──
   document.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
       const target = this.getAttribute('target');
       
-      // Dış linkse, yeni sekme ise veya sayfa içi çapa (#) ise veya onClick varsa karışma
-      if (!href || href.startsWith('http') || href.startsWith('#') || target === '_blank' || this.hasAttribute('onclick')) return;
+      if (!href || href.startsWith('http') || href.startsWith('#') || target === '_blank' || this.hasAttribute('onclick') || this.id === 'radarButton') return;
       
       e.preventDefault(); 
       document.body.classList.add('fade-out'); 
-      
-      setTimeout(() => {
-        window.location.href = href; 
-      }, 400); 
+      setTimeout(() => { window.location.href = href; }, 400); 
     });
   });
+
+  // ── SİBER DUYURU MODALI KONTROLLERİ ──
+  const radarButton = document.getElementById('radarButton');
+  const duyuruModal = document.getElementById('duyuruModal');
+  const closeModal = document.getElementById('closeModal');
+
+  if (radarButton && duyuruModal && closeModal) {
+    radarButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      duyuruModal.classList.add('show');
+      document.body.style.overflow = 'hidden'; 
+    });
+
+    closeModal.addEventListener('click', () => {
+      duyuruModal.classList.remove('show');
+      document.body.style.overflow = '';
+    });
+
+    duyuruModal.addEventListener('click', (e) => {
+      if (e.target === duyuruModal) {
+        duyuruModal.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    });
+  }
 });
+
+// ── LAZER ARKA PLANI (TÜM SAYFALAR İÇİN OTOMATİK) ──
+if (document.getElementById('particles-js') && typeof particlesJS !== 'undefined') {
+  particlesJS('particles-js', {
+    "particles": {
+      "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+      "color": { "value": "#00d4ff" },
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.3, "random": false },
+      "size": { "value": 3, "random": true },
+      "line_linked": { "enable": true, "distance": 150, "color": "#0a84ff", "opacity": 0.3, "width": 1 },
+      "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "out_mode": "out" }
+    },
+    "interactivity": {
+      "detect_on": "window", /* HATA BURADAYDI, CANVAS YERİNE WINDOW YAPILDI */
+      "events": {
+        "onhover": { "enable": true, "mode": "grab" },
+        "onclick": { "enable": true, "mode": "push" },
+        "resize": true
+      },
+      "modes": {
+        "grab": { "distance": 180, "line_linked": { "opacity": 0.6 } },
+        "push": { "particles_nb": 3 }
+      }
+    },
+    "retina_detect": true
+  });
+}

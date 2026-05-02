@@ -19,22 +19,30 @@
       overflow: hidden;
       padding: 0 1.5rem; 
     }
+
     .hero-bg-orb {
       position: absolute;
       border-radius: 50%;
       filter: blur(100px);
       pointer-events: none;
     }
+
     .orb-1 {
-      width: 500px; height: 500px;
+      width: 500px; 
+      height: 500px;
       background: radial-gradient(circle, rgba(10,132,255,0.15) 0%, transparent 70%);
-      top: 5%; left: -10%;
+      top: 5%; 
+      left: -10%;
     }
+
     .orb-2 {
-      width: 400px; height: 400px;
+      width: 400px; 
+      height: 400px;
       background: radial-gradient(circle, rgba(192,57,43,0.1) 0%, transparent 70%);
-      bottom: 5%; right: -5%;
+      bottom: 5%; 
+      right: -5%;
     }
+
     .hero-content {
       text-align: center;
       position: relative;
@@ -52,7 +60,10 @@
       color: var(--text-primary);
       letter-spacing: -1px;
     }
-    .hero-title .accent { color: var(--accent-cyan); }
+
+    .hero-title .accent { 
+      color: var(--accent-cyan); 
+    }
 
     /* ─── AY HİLAL ANİMASYONU ─── */
     .title-ay-wrap {
@@ -61,10 +72,12 @@
       color: var(--accent-cyan);
       vertical-align: baseline;
     }
+
     .title-ay-text {
       display: inline-block;
       transition: opacity 0.3s ease;
     }
+
     .moon-canvas-wrap {
       position: absolute;
       top: 50%;
@@ -76,9 +89,11 @@
       line-height: 0;
       overflow: visible;
     }
+
     .title-ay-wrap.moon-active .title-ay-text {
       opacity: 0;
     }
+
     .title-ay-wrap.moon-active .moon-canvas-wrap {
       opacity: 1;
     }
@@ -92,14 +107,17 @@
       margin: 0 auto 2.5rem;
       font-family: 'Share Tech Mono', monospace;
     }
+
     .hero-desc .decode-char {
       display: inline;
       transition: color 0.1s;
     }
+
     .hero-desc .decode-char.glitching {
       color: var(--accent-cyan);
       text-shadow: 0 0 8px rgba(0,212,255,0.7);
     }
+
     .hero-cta {
       display: flex;
       gap: 1rem;
@@ -120,12 +138,14 @@
       z-index: 10;
       cursor: pointer;
     }
+
     .chevrons {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 5px;
     }
+
     .chevron {
       width: 16px;
       height: 16px;
@@ -134,6 +154,7 @@
       transform: rotate(45deg);
       animation: scrollArrows 1.5s infinite;
     }
+
     .chevron:nth-child(1) { animation-delay: 0s; }
     .chevron:nth-child(2) { animation-delay: 0.15s; }
     .chevron:nth-child(3) { animation-delay: 0.3s; }
@@ -152,6 +173,7 @@
       text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
       animation: pulseText 2s infinite;
     }
+
     @keyframes pulseText {
       0%, 100% { opacity: 0.6; }
       50% { opacity: 1; }
@@ -164,6 +186,7 @@
       position: relative;
       z-index: 10;
     }
+
     .feature-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -173,21 +196,25 @@
       position: relative;
       overflow: hidden;
     }
+
     .feature-card::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, transparent 60%, rgba(10,132,255,0.04));
     }
+
     .feature-card:hover {
       border-color: var(--accent-blue);
       transform: translateY(-6px);
       box-shadow: 0 20px 50px rgba(10,132,255,0.1);
     }
+
     .feature-icon {
       font-size: 2rem;
       margin-bottom: 1.25rem;
     }
+
     .feature-card h3 {
       font-family: 'Rajdhani', sans-serif;
       font-size: 1.2rem;
@@ -195,6 +222,7 @@
       color: var(--text-primary);
       margin-bottom: 0.75rem;
     }
+
     .feature-card p {
       font-size: 0.88rem;
       color: var(--text-secondary);
@@ -207,6 +235,7 @@
       position: relative;
       z-index: 10;
     }
+
     .cta-box {
       max-width: 700px;
       margin: 0 auto;
@@ -217,6 +246,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .cta-box::before {
       content: '';
       position: absolute;
@@ -224,12 +254,14 @@
       height: 3px;
       background: linear-gradient(90deg, var(--accent-red), var(--accent-blue), var(--accent-cyan));
     }
+
     .cta-box h2 {
       font-family: 'Rajdhani', sans-serif;
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
     }
+
     .cta-box p {
       color: var(--text-secondary);
       margin-bottom: 2rem;
@@ -241,6 +273,7 @@
       transform: translateY(20px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
+
     .animate.visible {
       opacity: 1;
       transform: translateY(0);
@@ -254,8 +287,11 @@
 </head>
 <body>
 
+  <!-- GLOBAL SİBER AĞ ARKA PLANI (CSS İLE YÖNETİLİYOR) -->
+  <div id="particles-js"></div>
   <div class="grid-glow"></div>
 
+  <!-- NAVBAR -->
   <nav class="navbar" style="position: relative; z-index: 20;">
     <a href="index.html" class="nav-brand">
       <img src="Image.png" alt="Siberay Logo" />
@@ -266,14 +302,17 @@
     </a>
 
     <button class="hamburger" id="hamburger" aria-label="Menü">
-      <span></span><span></span><span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
 
     <ul class="nav-links">
-      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="index.html" class="active">Ana Sayfa</a></li>
       <li><a href="hakkimizda.html">Hakkımızda</a></li>
       <li><a href="etkinliklerimiz.html">Etkinliklerimiz</a></li>
       <li><a href="gazete.html">Gazete</a></li>
+      <li><a href="duyurular.html">Duyurular</a></li>
     </ul>
 
     <div class="nav-socials">
@@ -288,8 +327,6 @@
 
   <main>
     <section class="hero">
-      <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
-
       <div class="hero-bg-orb orb-1"></div>
       <div class="hero-bg-orb orb-2"></div>
 
@@ -297,18 +334,37 @@
         <h1 class="hero-title">
           SİBER<span class="title-ay-wrap" id="ayWrap">
             <span class="title-ay-text accent">AY</span>
-            <span class="moon-canvas-wrap"><svg id="moonSVG" xmlns="http://www.w3.org/2000/svg" overflow="visible"></svg></span>
+            <span class="moon-canvas-wrap">
+              <svg id="moonSVG" xmlns="http://www.w3.org/2000/svg" overflow="visible"></svg>
+            </span>
           </span><br/>
           <span style="font-size: 0.45em; letter-spacing: 8px; font-weight: 400; color: var(--text-secondary); display: block; margin-top: 0.5rem;">TOPLULUĞU</span>
         </h1>
+        
         <p class="hero-desc" id="heroDesc">
           Ondokuz Mayıs Üniversitesi'nin siber güvenlik alanında öncü öğrenci topluluğu.
           Birlikte öğreniyor, keşfediyor ve güvenli bir dijital gelecek inşa ediyoruz.
         </p>
+
         <div class="hero-cta">
           <a href="hakkimizda.html" class="btn btn-primary">Bizi Tanı →</a>
           <a href="etkinliklerimiz.html" class="btn btn-outline">Etkinliklerimiz</a>
         </div>
+
+        <!-- ── SİBER DUYURU RADARI (ALTIN NEON BUTON) ── -->
+        <!-- Bu buton scripts.js içindeki modal açma komutunu (id="radarButton") tetikler -->
+        <a href="#" id="radarButton" class="cyber-alert-widget animate visible">
+          <div class="alert-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+          </div>
+          <div class="alert-content">
+            <span class="alert-label">YAKLAŞAN ETKİNLİK</span>
+            <span class="alert-text">OSINT Eğitimi: 10 Mayıs 20:00 🔥</span>
+          </div>
+        </a>
+
       </div>
 
       <div class="hero-scroll" onclick="window.scrollBy({top: window.innerHeight, behavior: 'smooth'})">
@@ -320,6 +376,23 @@
         <span>KAYDIR</span>
       </div>
     </section>
+
+    <!-- ── GİZLİ SİBER AÇILIR PENCERE (MODAL) ── -->
+    <div id="duyuruModal" class="cyber-modal">
+      <div class="cyber-modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h2 style="color: #ffbb00; font-family: 'Rajdhani', sans-serif; margin-bottom: 1rem;">// EĞİTİM ALARMI</h2>
+        <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #fff;">OSINT (Açık Kaynak İstihbaratı) Eğitimi</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
+          Bu hafta Siberay ekibi olarak açık kaynaklardan nasıl istihbarat toplanacağını uygulamalı olarak işliyoruz. Bilgisayarını al gel!
+          <br><br>
+          <strong style="color: var(--text-primary);">Tarih:</strong> 10 Mayıs Cuma<br>
+          <strong style="color: var(--text-primary);">Saat:</strong> 20:00<br>
+          <strong style="color: var(--text-primary);">Platform:</strong> Google Meet
+        </p>
+        <a href="https://meet.google.com/" target="_blank" class="btn btn-primary" style="background: #ffbb00; color: #000; width: 100%; justify-content: center;">Toplantıya Katıl →</a>
+      </div>
+    </div>
 
     <section class="section">
       <div class="section-header animate">
@@ -401,50 +474,21 @@
     </div>
   </footer>
 
-  <script src="scripts.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-  
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  
+  <script src="scripts.js"></script>
+
   <script>
-    // 1. Sayfa kaymasını zorla engelleyen komut
+    // Sayfa Yüklenirken Kaymayı Önleme
     window.onload = function() {
       setTimeout(function() {
         window.scrollTo(0, 0);
       }, 50);
     };
 
-    // 2. Siber ağ (Particles) komutu
-    if (document.getElementById('particles-js')) {
-      particlesJS('particles-js', {
-        "particles": {
-          "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
-          "color": { "value": "#00d4ff" },
-          "shape": { "type": "circle" },
-          "opacity": { "value": 0.5, "random": false },
-          "size": { "value": 3, "random": true },
-          "line_linked": { "enable": true, "distance": 150, "color": "#0a84ff", "opacity": 0.4, "width": 1 },
-          "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "out_mode": "out" }
-        },
-        "interactivity": {
-          "detect_on": "canvas",
-          "events": {
-            "onhover": { "enable": true, "mode": "grab" },
-            "onclick": { "enable": true, "mode": "push" },
-            "resize": true
-          },
-          "modes": {
-            "grab": { "distance": 150, "line_linked": { "opacity": 0.8 } },
-            "push": { "particles_nb": 4 }
-          }
-        },
-        "retina_detect": true
-      });
-    }
-
-    // 3. Masaüstü için kart animasyonu
+    // Tilt (Kart Eğilme) Efekti
     if (window.matchMedia("(pointer: fine)").matches) {
-      VanillaTilt.init(document.querySelectorAll(".card"), {
+      VanillaTilt.init(document.querySelectorAll(".feature-card"), {
         max: 5,        
         speed: 400,    
         glare: true,   
@@ -457,6 +501,7 @@
       const ayWrap = document.getElementById('ayWrap');
       const ayText = ayWrap ? ayWrap.querySelector('.title-ay-text') : null;
       const svg    = document.getElementById('moonSVG');
+      
       if (!ayWrap || !svg || !ayText) return;
 
       const NS = 'http://www.w3.org/2000/svg';
@@ -464,7 +509,6 @@
       let progress  = 0;
       let built     = false;
 
-      // ── SVG yapısını bir kez oluştur ──
       function buildSVG(w, h) {
         svg.setAttribute('width',  w);
         svg.setAttribute('height', h);
@@ -472,34 +516,21 @@
         svg.innerHTML = '';
 
         const cx = w / 2, cy = h / 2;
-        // Yarıçap: yüksekliğin %44'ü — dolgun, iddialı hilal
         const r  = Math.min(w, h) * 0.44;
 
-        // Gölge dairesi kaydırması: r * 0.62 → güzel kalınlıkta hilal
         const sX = cx + r * 0.62;
         const sY = cy - r * 0.07;
         const sR = r * 0.96;
 
-        // Hilal path'ini hesapla (iki dairenin kesişimi)
-        // Sol daire: merkez cx,cy yarıçap r
-        // Sağ daire (gölge): merkez sX,sY yarıçap sR
-        // Path: sol dairenin görünen yayı + sağ dairenin iç yayı
-        function crescentPath() {
-          // Sol dairenin üst ve alt kesişim noktaları ile sağ daire
-          // Basit yaklaşım: clip-path yerine path2D ile birleşik alan
-          // Daha güvenilir: rect üzerinde clip kullan
-          return null; // SVG clipPath yaklaşımı kullanacağız
-        }
-
-        // ── Defs: gradient + filter + clipPath ──
         const defs = document.createElementNS(NS, 'defs');
 
-        // Radial gradient — sıcak sarı/altın
+        // Radial Gradient (Sarı)
         const radGrd = document.createElementNS(NS, 'radialGradient');
         radGrd.setAttribute('id', 'moonGrd');
         radGrd.setAttribute('cx', '38%');
         radGrd.setAttribute('cy', '35%');
         radGrd.setAttribute('r',  '65%');
+        
         const stops = [
           ['0%',   '#fff8c0', '1'],
           ['30%',  '#fdd835', '1'],
@@ -507,6 +538,7 @@
           ['85%',  '#b87200', '1'],
           ['100%', '#7a4a00', '1'],
         ];
+        
         stops.forEach(([offset, color, opacity]) => {
           const s = document.createElementNS(NS, 'stop');
           s.setAttribute('offset', offset);
@@ -516,17 +548,19 @@
         });
         defs.appendChild(radGrd);
 
-        // Kenar parlaklığı için radial gradient (hilal iç kenarı)
+        // Rim Glow Gradient
         const rimGrd = document.createElementNS(NS, 'radialGradient');
         rimGrd.setAttribute('id', 'rimGrd');
         rimGrd.setAttribute('cx', '28%');
         rimGrd.setAttribute('cy', '50%');
         rimGrd.setAttribute('r',  '55%');
+        
         const rimStops = [
           ['0%',  '#fffde0', '1'],
           ['40%', '#fde040', '0.6'],
           ['100%','#e69500', '0'],
         ];
+        
         rimStops.forEach(([offset, color, opacity]) => {
           const s = document.createElementNS(NS, 'stop');
           s.setAttribute('offset', offset);
@@ -536,7 +570,7 @@
         });
         defs.appendChild(rimGrd);
 
-        // Glow filtresi — Gaussian blur, hilal şeklini takip eder
+        // Filters
         const fltOuter = document.createElementNS(NS, 'filter');
         fltOuter.setAttribute('id', 'glowOuter');
         fltOuter.setAttribute('x', '-80%');
@@ -544,13 +578,13 @@
         fltOuter.setAttribute('width', '260%');
         fltOuter.setAttribute('height', '260%');
         fltOuter.setAttribute('color-interpolation-filters', 'sRGB');
+        
         const feGaussOuter = document.createElementNS(NS, 'feGaussianBlur');
         feGaussOuter.setAttribute('in', 'SourceGraphic');
         feGaussOuter.setAttribute('stdDeviation', String(r * 0.28));
         fltOuter.appendChild(feGaussOuter);
         defs.appendChild(fltOuter);
 
-        // İnce kenar glow — daha az blur
         const fltRim = document.createElementNS(NS, 'filter');
         fltRim.setAttribute('id', 'glowRim');
         fltRim.setAttribute('x', '-40%');
@@ -558,16 +592,16 @@
         fltRim.setAttribute('width', '180%');
         fltRim.setAttribute('height', '180%');
         fltRim.setAttribute('color-interpolation-filters', 'sRGB');
+        
         const feGaussRim = document.createElementNS(NS, 'feGaussianBlur');
         feGaussRim.setAttribute('in', 'SourceGraphic');
         feGaussRim.setAttribute('stdDeviation', String(r * 0.10));
         fltRim.appendChild(feGaussRim);
         defs.appendChild(fltRim);
 
-        // ClipPath: hilal şekli (ana daire - gölge daire)
+        // ClipPath
         const clip = document.createElementNS(NS, 'clipPath');
         clip.setAttribute('id', 'crescentClip');
-        // Ana daire
         const clipCircle = document.createElementNS(NS, 'circle');
         clipCircle.setAttribute('cx', cx);
         clipCircle.setAttribute('cy', cy);
@@ -575,29 +609,31 @@
         clip.appendChild(clipCircle);
         defs.appendChild(clip);
 
-        // Mask: gölge daireyi çıkarmak için
+        // Mask
         const mask = document.createElementNS(NS, 'mask');
         mask.setAttribute('id', 'crescentMask');
         const maskRect = document.createElementNS(NS, 'rect');
         maskRect.setAttribute('x', 0); maskRect.setAttribute('y', 0);
         maskRect.setAttribute('width', w); maskRect.setAttribute('height', h);
         maskRect.setAttribute('fill', 'white');
+        
         const maskShadow = document.createElementNS(NS, 'circle');
         maskShadow.setAttribute('cx', sX);
         maskShadow.setAttribute('cy', sY);
         maskShadow.setAttribute('r',  sR);
         maskShadow.setAttribute('fill', 'black');
+        
         mask.appendChild(maskRect);
         mask.appendChild(maskShadow);
         defs.appendChild(mask);
-
         svg.appendChild(defs);
 
-        // ── Katman 1: Dış glow (blur'lu hilal kopyası, sarı) ──
+        // Layers
         const glowGroup = document.createElementNS(NS, 'g');
         glowGroup.setAttribute('id', 'glowLayer');
         glowGroup.setAttribute('filter', 'url(#glowOuter)');
         glowGroup.setAttribute('opacity', '0');
+        
         const glowCircle = document.createElementNS(NS, 'circle');
         glowCircle.setAttribute('cx', cx);
         glowCircle.setAttribute('cy', cy);
@@ -607,11 +643,11 @@
         glowGroup.appendChild(glowCircle);
         svg.appendChild(glowGroup);
 
-        // ── Katman 2: Orta glow (daha az blur) ──
         const rimGlowGroup = document.createElementNS(NS, 'g');
         rimGlowGroup.setAttribute('id', 'rimGlowLayer');
         rimGlowGroup.setAttribute('filter', 'url(#glowRim)');
         rimGlowGroup.setAttribute('opacity', '0');
+        
         const rimGlowCircle = document.createElementNS(NS, 'circle');
         rimGlowCircle.setAttribute('cx', cx);
         rimGlowCircle.setAttribute('cy', cy);
@@ -621,10 +657,10 @@
         rimGlowGroup.appendChild(rimGlowCircle);
         svg.appendChild(rimGlowGroup);
 
-        // ── Katman 3: Hilal kendisi (gradient dolgulu) ──
         const moonGroup = document.createElementNS(NS, 'g');
         moonGroup.setAttribute('id', 'moonLayer');
         moonGroup.setAttribute('opacity', '0');
+        
         const moonCircle = document.createElementNS(NS, 'circle');
         moonCircle.setAttribute('cx', cx);
         moonCircle.setAttribute('cy', cy);
@@ -632,7 +668,7 @@
         moonCircle.setAttribute('fill', 'url(#moonGrd)');
         moonCircle.setAttribute('mask', 'url(#crescentMask)');
         moonGroup.appendChild(moonCircle);
-        // İnce iç yüzey parıltısı
+        
         const shineCircle = document.createElementNS(NS, 'circle');
         shineCircle.setAttribute('cx', cx);
         shineCircle.setAttribute('cy', cy);
@@ -641,8 +677,8 @@
         shineCircle.setAttribute('mask', 'url(#crescentMask)');
         shineCircle.setAttribute('opacity', '0.5');
         moonGroup.appendChild(shineCircle);
+        
         svg.appendChild(moonGroup);
-
         built = true;
       }
 
@@ -661,8 +697,9 @@
         const glowLayer    = document.getElementById('glowLayer');
         const rimGlowLayer = document.getElementById('rimGlowLayer');
         const moonLayer    = document.getElementById('moonLayer');
+        
         if (!glowLayer || !moonLayer) return;
-        // Glow önce gelir ve daha fazla yanar
+        
         glowLayer.setAttribute('opacity',    String(Math.min(prog * 1.1, 1) * 0.75));
         rimGlowLayer.setAttribute('opacity', String(Math.min(prog * 1.2, 1) * 0.90));
         moonLayer.setAttribute('opacity',    String(prog));
@@ -670,7 +707,11 @@
 
       function animateIn() {
         progress += 0.038;
-        if (progress >= 1) { progress = 1; applyProgress(1); return; }
+        if (progress >= 1) { 
+          progress = 1; 
+          applyProgress(1); 
+          return; 
+        }
         applyProgress(progress);
         animFrame = requestAnimationFrame(animateIn);
       }
@@ -705,14 +746,22 @@
 
       function moonCycle() {
         startMoon();
-        setTimeout(() => { endMoon(); setTimeout(moonCycle, 2200); }, 3800);
+        setTimeout(() => { 
+          endMoon(); 
+          setTimeout(moonCycle, 2200); 
+        }, 3800);
       }
 
-      setTimeout(() => { setSVGSize(); setTimeout(moonCycle, 500); }, 1800);
-      window.addEventListener('resize', () => { built = false; setSVGSize(); });
+      setTimeout(() => { 
+        setSVGSize(); 
+        setTimeout(moonCycle, 500); 
+      }, 1800);
+      
+      window.addEventListener('resize', () => { 
+        built = false; 
+        setSVGSize(); 
+      });
     })();
-
-
 
     // ─── CYBER DECODE / GLİTCH METİN EFEKTİ ───
     (function() {
@@ -743,7 +792,6 @@
         let revealed = 0;
         const total = chars.length;
 
-        // Önce tüm harfleri glitch karakterlerine çevir
         spans.forEach((s, i) => {
           if (chars[i] === ' ' || chars[i] === '\n') {
             s.textContent = chars[i];
@@ -754,10 +802,8 @@
         });
 
         const revealInterval = setInterval(() => {
-          // Her tick'te birkaç karakteri çöz
           let toReveal = Math.ceil((total - revealed) * 0.08) + 1;
           for (let t = 0; t < toReveal && revealed < total; t++) {
-            // Soldan sağa sıralı reveal
             const idx = revealed;
             revealed++;
             if (chars[idx] === ' ' || chars[idx] === '\n') continue;
@@ -765,7 +811,6 @@
             spans[idx].classList.remove('glitching');
           }
 
-          // Henüz reveal edilmemiş olanları sürekli değiştir
           for (let i = revealed; i < total; i++) {
             if (chars[i] === ' ' || chars[i] === '\n') continue;
             if (Math.random() < 0.4) {
@@ -775,7 +820,6 @@
 
           if (revealed >= total) {
             clearInterval(revealInterval);
-            // Hepsini düzelt
             spans.forEach((s, i) => {
               s.textContent = chars[i];
               s.classList.remove('glitching');
@@ -789,29 +833,11 @@
         runDecode(spans, originalText.split(''));
       }
 
-      // Sayfa yüklenince 1.5sn sonra ve ardından her 8 saniyede
       setTimeout(() => {
         startGlitch();
         setInterval(startGlitch, 8000);
       }, 1500);
     })();
-    document.addEventListener('mousemove', (e) => {
-      document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
-      document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
-    });
-
-    // 5. Kaydırdıkça belirme efekti
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.animate').forEach((el) => {
-      observer.observe(el);
-    });
   </script>
 </body>
 </html>
