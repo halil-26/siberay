@@ -80,30 +80,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ── LAZER ARKA PLANI (TÜM SAYFALAR İÇİN OTOMATİK) ──
-if (document.getElementById('particles-js') && typeof particlesJS !== 'undefined') {
-  particlesJS('particles-js', {
-    "particles": {
-      "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
-      "color": { "value": "#00d4ff" },
-      "shape": { "type": "circle" },
-      "opacity": { "value": 0.3, "random": false },
-      "size": { "value": 3, "random": true },
-      "line_linked": { "enable": true, "distance": 150, "color": "#0a84ff", "opacity": 0.3, "width": 1 },
-      "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "out_mode": "out" }
-    },
-    "interactivity": {
-      "detect_on": "window", /* HATA BURADAYDI, CANVAS YERİNE WINDOW YAPILDI */
-      "events": {
-        "onhover": { "enable": true, "mode": "grab" },
-        "onclick": { "enable": true, "mode": "push" },
-        "resize": true
+// ── LAZER ARKA PLANI — tsParticles ──
+// tsParticles, eski particles.js'in güncel versiyonu.
+// clientY kullandığı için scroll sorunu yaşanmaz.
+if (document.getElementById('particles-js') && typeof tsParticles !== 'undefined') {
+  tsParticles.load('particles-js', {
+    fpsLimit: 60,
+    particles: {
+      number: { value: 50, density: { enable: true, area: 800 } },
+      color: { value: '#00d4ff' },
+      shape: { type: 'circle' },
+      opacity: { value: 0.3 },
+      size: { value: { min: 1, max: 3 } },
+      links: {
+        enable: true,
+        distance: 150,
+        color: '#0a84ff',
+        opacity: 0.3,
+        width: 1
       },
-      "modes": {
-        "grab": { "distance": 180, "line_linked": { "opacity": 0.6 } },
-        "push": { "particles_nb": 3 }
+      move: {
+        enable: true,
+        speed: 1.5,
+        direction: 'none',
+        random: true,
+        outModes: { default: 'out' }
       }
     },
-    "retina_detect": true
+    interactivity: {
+      detectsOn: 'window',
+      events: {
+        onHover: { enable: true, mode: 'grab' },
+        onClick: { enable: true, mode: 'push' },
+        resize: true
+      },
+      modes: {
+        grab: { distance: 180, links: { opacity: 0.6 } },
+        push: { quantity: 3 }
+      }
+    },
+    detectRetina: true
   });
 }

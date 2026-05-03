@@ -76,7 +76,7 @@ body::before {
   width: 100vw; 
   height: 100vh; 
   z-index: 0; 
-  pointer-events: none; 
+  pointer-events: auto; 
 }
 
 /* ─── SİBER KAYDIRMA VE METİN SEÇİMİ ─── */
@@ -344,7 +344,6 @@ footer { position: relative; z-index: 10; border-top: 1px solid var(--border); b
   text-align: left;
   transform: scale(0.95);
   animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-fill-mode: forwards;
 }
 
 .close-modal {
